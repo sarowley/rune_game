@@ -9,10 +9,11 @@ let config = {
             debug: false
         }
     },
-    scene: [Play]
+    scene: [Title, Play]
 }
 
 var dude;
 var platforms;
 var cursors;
+var keySPACE;
 let game = new Phaser.Game(config);
