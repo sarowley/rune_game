@@ -5,9 +5,6 @@ class Rune extends Phaser.GameObjects.Sprite{
         this.name = name;
         this.setVisible(false);
     }
-    displayRune(x, y){
-        this.setVisible(true);
-    }
 }
 
 function runeScript(rune1, rune2){
@@ -26,4 +23,10 @@ function runeScript(rune1, rune2){
         case"draw ice":;
         case"draw shape":;
     }
+}
+
+
+function displayRune(x, y, rune){
+    rune.x = x - 10;
+    rune.y = y - 20;
 }

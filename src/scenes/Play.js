@@ -42,10 +42,11 @@ class Play extends Phaser.Scene {
         this.drawRune = new Rune(this, 250, 100, 'test-rune', "draw");
 
         runeScript(this.heatRune, this.iceRune);
-        this.heatRune.displayRune();
-        this.iceRune.displayRune();
-        this.shapeRune.displayRune();
-        this.drawRune.displayRune();
+
+        this.heatRune.setVisible(true);
+        this.iceRune.setVisible(true);
+        this.shapeRune.setVisible(true);
+        this.drawRune.setVisible(true);
         
     }
     update() {
@@ -61,6 +62,9 @@ class Play extends Phaser.Scene {
         if (cursors.up.isDown && dude.body.touching.down)
         {
             dude.setVelocityY(-250);
+        }
+        if(this.heatRune._visible){
+            displayRune(dude.x, dude.y, this.heatRune);
         }
     }
 }
