@@ -3,7 +3,9 @@ class Play extends Phaser.Scene {
         super("playScene");
     }
 
-    preload() {}
+    preload() {
+        this.load.image("test-rune","./assets/testRune.png");
+    }
     create() {
 
         dude = this.physics.add.sprite(100, 450, 'image');
@@ -24,13 +26,16 @@ class Play extends Phaser.Scene {
 
         cursors = this.input.keyboard.createCursorKeys();
 
-        this.heatRune = new Rune("heat");
-        this.iceRune = new Rune("ice");
-        this.shapeRune = new Rune("shape");
-        this.drawRune = new Rune("draw");
+        this.heatRune = new Rune(this, 100, 100, 'test-rune', "heat");
+        this.iceRune = new Rune(this, 150, 100, 'test-rune', "ice");
+        this.shapeRune = new Rune(this, 200, 100, 'test-rune', "shape");
+        this.drawRune = new Rune(this, 250, 100, 'test-rune', "draw");
 
         runeScript(this.heatRune, this.iceRune);
-        this.heatRune.displayRune(this, 100, 100, 'image');
+        this.heatRune.displayRune();
+        this.iceRune.displayRune();
+        this.shapeRune.displayRune();
+        this.drawRune.displayRune();
         
     }
     update() {
