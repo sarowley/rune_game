@@ -23,6 +23,14 @@ class Play extends Phaser.Scene {
         this.physics.add.collider(dude, platforms);
 
         cursors = this.input.keyboard.createCursorKeys();
+
+        this.heatRune = new Rune("heat");
+        this.iceRune = new Rune("ice");
+        this.shapeRune = new Rune("shape");
+        this.drawRune = new Rune("draw");
+
+        runeScript(this.heatRune, this.iceRune);
+        this.heatRune.displayRune(this, 100, 100, 'image');
         
     }
     update() {
