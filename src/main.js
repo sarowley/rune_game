@@ -16,7 +16,6 @@ var dude;
 var platforms;
 var boxes;
 var pressurePlate;
-var pressureCheck = true;
 var cursors;
 var keySPACE;
 let game = new Phaser.Game(config);
