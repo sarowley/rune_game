@@ -57,6 +57,7 @@ class Play extends Phaser.Scene {
         
     }
     update() {
+        boxes.setVelocityX(0);
         if (cursors.left.isDown){
             dude.setVelocityX(-160);
         }
@@ -69,6 +70,14 @@ class Play extends Phaser.Scene {
         if (cursors.up.isDown && dude.body.touching.down)
         {
             dude.setVelocityY(-250);
+        }
+        displayRune(dude.x, dude.y, this.heatRune);
+    }
+
+    whatup() {
+        if (pressureCheck){
+            console.log("pressure plate activate");
+            pressureCheck = false;
         }
     }
 }
