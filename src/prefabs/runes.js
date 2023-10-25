@@ -26,7 +26,17 @@ function runeScript(rune1, rune2){
 }
 
 
-function displayRune(x, y, rune){
+function displayRunes(x, y, runes){
+    displayRuneLeft(x, y, runes[0])
+    displayRuneRight(x, y, runes[1])
+}
+
+function displayRuneLeft(x, y, rune){
     rune.x = x - 10;
+    rune.y = y - 20;
+}
+
+function displayRuneRight(x, y, rune){
+    rune.x = x + 10;
     rune.y = y - 20;
 }

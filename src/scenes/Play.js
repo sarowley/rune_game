@@ -7,7 +7,9 @@ class Play extends Phaser.Scene {
     this.load.image("test-rune", "./assets/testRune.png");
   }
   create() {
-    dude = this.physics.add.sprite(450, 550, "image");
+    // dude = this.physics.add.sprite(450, 550, "image");
+
+    dude = new Character(this, 450, 450, "image")
 
     platforms = this.physics.add.staticGroup();
 
@@ -71,7 +73,7 @@ class Play extends Phaser.Scene {
         {
             dude.setVelocityY(-250);
         }
-        displayRune(dude.x, dude.y, this.heatRune);
+        displayRunes(dude.x, dude.y, [this.heatRune, this.iceRune]);
     }
 
     whatup() {
