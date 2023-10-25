@@ -49,30 +49,26 @@ class Play extends Phaser.Scene {
     this.shapeRune = new Rune(this, 200, 100, "test-rune", "shape");
     this.drawRune = new Rune(this, 250, 100, "test-rune", "draw");
 
-    runeScript(this.heatRune, this.iceRune);
-    this.heatRune.displayRune();
-    this.iceRune.displayRune();
-    this.shapeRune.displayRune();
-    this.drawRune.displayRune();
-  }
-  update() {
-    boxes.setVelocityX(0);
-    if (cursors.left.isDown) {
-      dude.setVelocityX(-160);
-    } else if (cursors.right.isDown) {
-      dude.setVelocityX(160);
-    } else {
-      dude.setVelocityX(0);
+        runeScript(this.heatRune, this.iceRune);
+        this.heatRune.setVisible(true);
+        this.iceRune.setVisible(true);
+        this.shapeRune.setVisible(true);
+        this.drawRune.setVisible(true);
+        
     }
-    if (cursors.up.isDown && dude.body.touching.down) {
-      dude.setVelocityY(-250);
+    update() {
+        if (cursors.left.isDown){
+            dude.setVelocityX(-160);
+        }
+        else if (cursors.right.isDown){
+            dude.setVelocityX(160);
+        }
+        else {
+            dude.setVelocityX(0);
+        }
+        if (cursors.up.isDown && dude.body.touching.down)
+        {
+            dude.setVelocityY(-250);
+        }
     }
-  }
-
-  whatup() {
-    if (pressureCheck) {
-      console.log("pressure plate activated");
-      pressureCheck = false;
-    }
-  }
 }
