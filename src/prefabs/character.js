@@ -13,7 +13,7 @@ class Character extends Phaser.Physics.Arcade.Sprite{
         if(this.currentSpell.length < 2){
             if(this.currentSpell.length > 0 && this.currentSpell[0] != rune){
                 this.currentSpell.push(rune);
-                rune.setVisible(true);
+                rune.setVisible(true);  
             }
             else if(this.currentSpell.length == 0){
                 this.currentlyCasting = true;
@@ -21,6 +21,7 @@ class Character extends Phaser.Physics.Arcade.Sprite{
                 this.currentSpell.push(rune);
                 rune.setVisible(true);
             }
+            this.setFrame(3);
         }
         
     }
@@ -38,6 +39,7 @@ class Character extends Phaser.Physics.Arcade.Sprite{
         else{
             console.log("fizzle");
         }
+        this.setFrame(0);
     }
 
     removeSpell(){

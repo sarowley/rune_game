@@ -9,6 +9,7 @@ class Play extends Phaser.Scene {
     this.load.image("wizard", "./assets/testWizard-1.png");
     this.load.image("scroll", "./assets/scrollUI-1.png");
     this.load.image("fire", "./assets/Fire1.png");
+    this.load.image("platform", "./assets/FloorTile-1.png.png");
     this.load.spritesheet("wizardss", "./assets/wizardSpritesheet.png", {frameWidth: 16, frameHeight: 32, startFrame: 0, endFrame: 5});
     this.load.spritesheet("runeSymbols", "./assets/runeSymbols.png", {frameWidth: 16, frameHeight: 16, startFrame: 0, endFrame: 3});
     this.load.spritesheet("box", "./assets/cubes.png", {frameWidth: 16, frameHeight: 16, startFrame: 0, endFrame: 4});
@@ -18,13 +19,18 @@ class Play extends Phaser.Scene {
   create() {
 
     dude = new Character(this, 450, 450, "wizardss").setScale(2);
-
+    this.anims.create({
+      key: 'wizardWalk',
+      frames: this.anims.generateFrameNumbers('wizardss', {start: 0, end: 2, first: 0}),
+      frameRate: 6,
+      repeat: -1
+  });
     platforms = this.physics.add.staticGroup();
 
-    boxes = this.physics.add.sprite(550, 500, "box");
+    boxes = this.physics.add.sprite(550, 500, "box").setScale(2);
     boxes.setPushable(true);
 
-    pressurePlate = this.physics.add.staticSprite(750, 590, "plate");
+    pressurePlate = this.physics.add.staticSprite(750, 582, "plate").setOrigin(1,1).setScale(2);
 
     this.physics.add.overlap(boxes, pressurePlate, this.whatup, null, this);
     this.physics.add.overlap(dude, pressurePlate, this.whatup, null, this);
@@ -35,11 +41,11 @@ class Play extends Phaser.Scene {
 
     platforms.create(400, 980, "image").setScale(25).refreshBody();
 
-    platforms.create(700, 500, "image");
-    platforms.create(200, 450, "image");
-    platforms.create(300, 550, "image");
-    platforms.create(600, 450, "image");
-    platforms.create(400, 350, "image");
+    platforms.create(700, 500, "platform").setScale(2);
+    platforms.create(200, 450, "platform").setScale(2);
+    platforms.create(300, 550, "platform").setScale(2);
+    platforms.create(600, 450, "platform").setScale(2);
+    platforms.create(400, 350, "platform").setScale(2);
 
     this.physics.add.collider(dude, platforms);
     this.physics.add.collider(dude, boxes);
@@ -99,7 +105,12 @@ class Play extends Phaser.Scene {
         {
             dude.setVelocityY(-250);
         }
-
+        if(Phaser.Input.Keyboard.JustDown(this.keyA)){
+          dude.flipX = true;
+        }
+        if(Phaser.Input.Keyboard.JustDown(this.keyD)){
+          dude.resetFlip();
+        }
 
         if(Phaser.Input.Keyboard.JustDown(this.key1)){
             dude.addRune(this.heatRune);
