@@ -8,7 +8,7 @@ class Play extends Phaser.Scene {
   }
   create() {
 
-    dude = new Character(this, 450, 450, "image")
+    dude = new Character(this, 450, 450, "image");
 
     platforms = this.physics.add.staticGroup();
 
@@ -18,29 +18,22 @@ class Play extends Phaser.Scene {
     pressurePlate = this.physics.add.staticSprite(750, 590, "image");
 
     this.physics.add.overlap(boxes, pressurePlate, this.whatup, null, this);
+    this.physics.add.overlap(dude, pressurePlate, this.whatup, null, this);
 
     this.cameras.main.setBounds(-500, -500, 1600, 1200);
     this.cameras.main.startFollow(dude);
 
     platforms.create(400, 980, "image").setScale(25).refreshBody();
 
-    // function getRandom(min, max) {
-    //     return Math.random() * (max - min) + min;
-    // }
-
-    // for (let x = 0; x < 30; x++){
-    //     platforms.create(getRandom(0, 800), getRandom(0, 600), 'image');
-    // }
-
     platforms.create(700, 500, "image");
     platforms.create(200, 450, "image");
     platforms.create(300, 550, "image");
     platforms.create(600, 450, "image");
+    platforms.create(400, 350, 'image');
 
     this.physics.add.collider(dude, platforms);
     this.physics.add.collider(dude, boxes);
     this.physics.add.collider(boxes, platforms);
-    this.physics.add.collider(pressurePlate, platforms);
     this.physics.add.collider(pressurePlate, boxes);
 
     cursors = this.input.keyboard.createCursorKeys();
@@ -56,13 +49,13 @@ class Play extends Phaser.Scene {
     this.shapeRune = new Rune(this, 200, 100, "test-rune", "shape");
     this.drawRune = new Rune(this, 250, 100, "test-rune", "draw");
 
-        runeScript(this.heatRune, this.iceRune);
-        this.heatRune.setVisible(true);
-        this.iceRune.setVisible(true);
-        this.shapeRune.setVisible(true);
-        this.drawRune.setVisible(true);
-        
-    }
+    runeScript(this.heatRune, this.iceRune);
+    this.heatRune.setVisible(true);
+    this.iceRune.setVisible(true);
+    this.shapeRune.setVisible(true);
+    this.drawRune.setVisible(true);
+  }
+
     update() {
         boxes.setVelocityX(0);
         if (cursors.left.isDown){
@@ -94,12 +87,14 @@ class Play extends Phaser.Scene {
             dude.castSpell();
         }
         displayRunes(dude.x, dude.y, dude.currentSpell);
-    }
 
-    whatup() {
-        if (pressureCheck){
-            console.log("pressure plate activate");
-            pressureCheck = false;
+        if (cursors.up.isDown && dude.body.touching.down) {
+        dude.setVelocityY(-250);
         }
-    }
+    
+  }
+
+  whatup() {
+    console.log("pressure plate activate");
+  }
 }
