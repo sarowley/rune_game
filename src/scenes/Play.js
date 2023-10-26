@@ -24,6 +24,7 @@ class Play extends Phaser.Scene {
     this.cameras.main.setBounds(-500, -500, 1600, 1200);
     this.cameras.main.startFollow(dude);
 
+
     platforms.create(400, 980, "image").setScale(25).refreshBody();
 
     platforms.create(700, 500, "image");
@@ -39,6 +40,10 @@ class Play extends Phaser.Scene {
 
     cursors = this.input.keyboard.createCursorKeys();
 
+    this.keyW = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
+    this.keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
+    this.keyS = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
+    this.keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
     this.key1 = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ONE);
     this.key2 = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.TWO);
     this.key3 = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.THREE);
@@ -50,33 +55,44 @@ class Play extends Phaser.Scene {
     this.shapeRune = new Rune(this, 200, 100, "test-rune", "shape");
     this.drawRune = new Rune(this, 250, 100, "test-rune", "draw");
 
-    this.heatRune.setVisible(true);
-    this.iceRune.setVisible(true);
-    this.shapeRune.setVisible(true);
-    this.drawRune.setVisible(true);
+
+
+    this.mySelector = new Selector(this, 100, 200, "test-rune");
+
+
   }
 
     update() {
+
+
+      let mouseX = game.input.mousePointer.worldX;
+      let mouseY = game.input.mousePointer.worldY;
+
+      this.mySelector.updatePosition(mouseX, mouseY);
+
+
         boxes.setVelocityX(0);
-        if (cursors.left.isDown){
+        if (this.keyA.isDown){
             dude.setVelocityX(-160);
         }
-        else if (cursors.right.isDown){
+        else if (this.keyD.isDown){
             dude.setVelocityX(160);
-        } else if (cursors.down.isDown) {
-      dude.setScale(2, 1.5);
-      squat = true;
-    }
+        } 
+        else if (this.keyS.isDown) {
+            dude.setScale(2, 1.5);
+            squat = true;
+        }
         else {
             dude.setVelocityX(0);
-          dude.setScale(2);
-      this.noFall();
-      
-    }
-        if (cursors.up.isDown && dude.body.touching.down)
+            dude.setScale(2);
+            this.noFall();
+        }
+        if (this.keyW.isDown && dude.body.touching.down)
         {
             dude.setVelocityY(-250);
         }
+
+
         if(Phaser.Input.Keyboard.JustDown(this.key1)){
             dude.addRune(this.heatRune);
         }
@@ -94,9 +110,10 @@ class Play extends Phaser.Scene {
         }
         displayRunes(dude.x, dude.y, dude.currentSpell);
 
-        if (cursors.up.isDown && dude.body.touching.down) {
-        dude.setVelocityY(-250);
+        if (cursors.up.isDown && dude.body.touching.down){
+          dude.setVelocityY(-250);
         }
+
     
   }
 
