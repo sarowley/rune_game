@@ -49,7 +49,6 @@ class Play extends Phaser.Scene {
     this.shapeRune = new Rune(this, 200, 100, "test-rune", "shape");
     this.drawRune = new Rune(this, 250, 100, "test-rune", "draw");
 
-    runeScript(this.heatRune, this.iceRune);
     this.heatRune.setVisible(true);
     this.iceRune.setVisible(true);
     this.shapeRune.setVisible(true);

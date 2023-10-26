@@ -9,12 +9,15 @@ class Character extends Phaser.Physics.Arcade.Sprite{
     }
 
     addRune(rune){
-        if(this.currentSpell.length < 3){
+        if(this.currentSpell.length < 2){
+            console.log("less Than 3");
             if(this.currentSpell.length > 0 && this.currentSpell[0] != rune){
+                console.log("more than 0 and not previous");
                 this.currentSpell.push(rune);
                 rune.setVisible(true);
             }
             else if(this.currentSpell.length == 0){
+                console.log("first rune");
                 this.currentlyCasting = true;
                 this.currentSpell.push(rune);
                 rune.setVisible(true);
