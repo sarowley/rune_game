@@ -7,7 +7,6 @@ class Play extends Phaser.Scene {
     this.load.image("test-rune", "./assets/testRune.png");
   }
   create() {
-    // dude = this.physics.add.sprite(450, 550, "image");
 
     dude = new Character(this, 450, 450, "image")
 
@@ -46,6 +45,12 @@ class Play extends Phaser.Scene {
 
     cursors = this.input.keyboard.createCursorKeys();
 
+    this.key1 = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ONE);
+    this.key2 = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.TWO);
+    this.key3 = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.THREE);
+    this.key4 = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.FOUR);
+    this.keySpace = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
+
     this.heatRune = new Rune(this, 100, 100, "test-rune", "heat");
     this.iceRune = new Rune(this, 150, 100, "test-rune", "ice");
     this.shapeRune = new Rune(this, 200, 100, "test-rune", "shape");
@@ -73,7 +78,22 @@ class Play extends Phaser.Scene {
         {
             dude.setVelocityY(-250);
         }
-        displayRunes(dude.x, dude.y, [this.heatRune, this.iceRune]);
+        if(Phaser.Input.Keyboard.JustDown(this.key1)){
+            dude.addRune(this.heatRune);
+        }
+        if(Phaser.Input.Keyboard.JustDown(this.key2)){
+            dude.addRune(this.iceRune);
+        }
+        if(Phaser.Input.Keyboard.JustDown(this.key3)){
+            dude.addRune(this.shapeRune);
+        }
+        if(Phaser.Input.Keyboard.JustDown(this.key4)){
+            dude.addRune(this.drawRune);
+        }
+        if(Phaser.Input.Keyboard.JustDown(this.keySpace)){
+            dude.castSpell();
+        }
+        displayRunes(dude.x, dude.y, dude.currentSpell);
     }
 
     whatup() {

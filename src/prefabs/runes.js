@@ -27,8 +27,15 @@ function runeScript(rune1, rune2){
 
 
 function displayRunes(x, y, runes){
-    displayRuneLeft(x, y, runes[0])
-    displayRuneRight(x, y, runes[1])
+    if(runes.length != 0){
+        if(runes.length == 2){  
+            displayRuneLeft(x, y, runes[0])
+            displayRuneRight(x, y, runes[1])
+        }
+        else {
+            displayRuneLeft(x, y, runes[0])
+        }
+    }
 }
 
 function displayRuneLeft(x, y, rune){
