@@ -6,6 +6,7 @@ class Character extends Phaser.Physics.Arcade.Sprite{
 
         this.currentSpell = [];
         this.currentlyCasting = false;
+        this.parerntScene = scene;
     }
 
     addRune(rune){
@@ -16,7 +17,7 @@ class Character extends Phaser.Physics.Arcade.Sprite{
             }
             else if(this.currentSpell.length == 0){
                 this.currentlyCasting = true;
-                this.body.allowGravity = false;
+                this.parerntScene.physics.pause();
                 this.currentSpell.push(rune);
                 rune.setVisible(true);
             }
@@ -41,7 +42,7 @@ class Character extends Phaser.Physics.Arcade.Sprite{
 
     removeSpell(){
         this.currentlyCasting = false;
-        this.body.allowGravity = false;
+        this.parerntScene.physics.resume();
         for(let rune of this.currentSpell){
             rune.setVisible(false);
         }

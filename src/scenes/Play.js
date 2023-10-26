@@ -127,4 +127,6 @@ class Play extends Phaser.Scene {
         squat = false;
     }
   }
+
 }
+
