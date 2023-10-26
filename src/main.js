@@ -17,5 +17,6 @@ var platforms;
 var boxes;
 var pressurePlate;
 var cursors;
+var squat = false;
 var keySPACE;
 let game = new Phaser.Game(config);
