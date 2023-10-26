@@ -5,10 +5,11 @@ class Play extends Phaser.Scene {
 
   preload() {
     this.load.image("test-rune", "./assets/testRune.png");
+    this.load.image("wizard", "./assets/testWizard-1.png");
   }
   create() {
 
-    dude = new Character(this, 450, 450, "image");
+    dude = new Character(this, 450, 450, "wizard").setScale(2);
 
     platforms = this.physics.add.staticGroup();
 
@@ -29,7 +30,7 @@ class Play extends Phaser.Scene {
     platforms.create(200, 450, "image");
     platforms.create(300, 550, "image");
     platforms.create(600, 450, "image");
-    platforms.create(400, 350, 'image');
+    platforms.create(400, 350, "image");
 
     this.physics.add.collider(dude, platforms);
     this.physics.add.collider(dude, boxes);
@@ -62,10 +63,16 @@ class Play extends Phaser.Scene {
         }
         else if (cursors.right.isDown){
             dude.setVelocityX(160);
-        }
+        } else if (cursors.down.isDown) {
+      dude.setScale(2, 1.5);
+      squat = true;
+    }
         else {
             dude.setVelocityX(0);
-        }
+          dude.setScale(2);
+      this.noFall();
+      
+    }
         if (cursors.up.isDown && dude.body.touching.down)
         {
             dude.setVelocityY(-250);
@@ -95,5 +102,12 @@ class Play extends Phaser.Scene {
 
   whatup() {
     console.log("pressure plate activate");
+  }
+
+  noFall() {
+    if (squat && dude.body.touching.down) {
+        dude.setVelocityY(-100);
+        squat = false;
+    }
   }
 }
