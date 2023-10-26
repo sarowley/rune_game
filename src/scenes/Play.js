@@ -5,18 +5,26 @@ class Play extends Phaser.Scene {
 
   preload() {
     this.load.image("test-rune", "./assets/testRune.png");
+    this.load.image("ice", "./assets/freeze.png");
     this.load.image("wizard", "./assets/testWizard-1.png");
+    this.load.image("scroll", "./assets/scrollUI-1.png");
+    this.load.image("fire", "./assets/Fire1.png");
+    this.load.spritesheet("wizardss", "./assets/wizardSpritesheet.png", {frameWidth: 16, frameHeight: 32, startFrame: 0, endFrame: 5});
+    this.load.spritesheet("runeSymbols", "./assets/runeSymbols.png", {frameWidth: 16, frameHeight: 16, startFrame: 0, endFrame: 3});
+    this.load.spritesheet("box", "./assets/cubes.png", {frameWidth: 16, frameHeight: 16, startFrame: 0, endFrame: 4});
+    this.load.spritesheet("runes", "./assets/runes.png", {frameWidth: 16, frameHeight: 16, startFrame: 0, endFrame: 3});
+    this.load.spritesheet("plate", "./assets/pressureplate.png", {frameWidth: 16, frameHeight: 4, startFrame: 0, endFrame: 1});
   }
   create() {
 
-    dude = new Character(this, 450, 450, "wizard").setScale(2);
+    dude = new Character(this, 450, 450, "wizardss").setScale(2);
 
     platforms = this.physics.add.staticGroup();
 
-    boxes = this.physics.add.sprite(550, 500, "image");
+    boxes = this.physics.add.sprite(550, 500, "box");
     boxes.setPushable(true);
 
-    pressurePlate = this.physics.add.staticSprite(750, 590, "image");
+    pressurePlate = this.physics.add.staticSprite(750, 590, "plate");
 
     this.physics.add.overlap(boxes, pressurePlate, this.whatup, null, this);
     this.physics.add.overlap(dude, pressurePlate, this.whatup, null, this);
@@ -50,14 +58,14 @@ class Play extends Phaser.Scene {
     this.key4 = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.FOUR);
     this.keySpace = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
 
-    this.heatRune = new Rune(this, 100, 100, "test-rune", "heat");
-    this.iceRune = new Rune(this, 150, 100, "test-rune", "ice");
-    this.shapeRune = new Rune(this, 200, 100, "test-rune", "shape");
-    this.drawRune = new Rune(this, 250, 100, "test-rune", "draw");
+    this.heatRune = new Rune(this, 100, 100, "runes", "heat");
+    this.iceRune = new Rune(this, 150, 100, "runes", "ice").setFrame(1);
+    this.shapeRune = new Rune(this, 200, 100, "runes", "shape").setFrame(2);
+    this.drawRune = new Rune(this, 250, 100, "runes", "draw").setFrame(3);
 
 
 
-    this.mySelector = new Selector(this, 100, 200, "test-rune");
+    this.mySelector = new Selector(this, 100, 200, "runes");
 
 
   }
