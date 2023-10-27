@@ -37,12 +37,14 @@ class Play extends Phaser.Scene {
 
     platforms = this.physics.add.staticGroup();
 
-    boxes = this.physics.add.sprite(550, 500, "box").setScale(2);
-    boxes.setPushable(true);
+    this.boxes = this.physics.add.group({pushable: true, allowGravity: true});
+    this.box = this.physics.add.sprite(550, 500, "box").setScale(2);
+    this.boxes.add(this.box);
+
 
     pressurePlate = this.physics.add.staticSprite(750, 582, "plate").setOrigin(1,1).setScale(2);
 
-    this.physics.add.overlap(boxes, pressurePlate, this.whatup, null, this);
+    this.physics.add.overlap(this.box, pressurePlate, this.whatup, null, this);
     this.physics.add.overlap(dude, pressurePlate, this.whatup, null, this);
 
     this.cameras.main.setBounds(-500, -500, 1600, 1200);
@@ -58,9 +60,10 @@ class Play extends Phaser.Scene {
     platforms.create(400, 350, "platform").setScale(2);
 
     this.physics.add.collider(dude, platforms);
-    this.physics.add.collider(dude, boxes);
-    this.physics.add.collider(boxes, platforms);
-    this.physics.add.collider(pressurePlate, boxes);
+    this.physics.add.collider(dude, this.box);
+    this.physics.add.collider(this.box, platforms);
+    this.physics.add.collider(pressurePlate, this.box);
+    this.physics.add.collider(this.boxes, this.boxes);
 
     cursors = this.input.keyboard.createCursorKeys();
 
@@ -99,7 +102,14 @@ class Play extends Phaser.Scene {
       this.mySelector.updatePosition(mouseX, mouseY);
 
 
-        boxes.setVelocityX(0);
+      this.boxes.children.each(childBox => {
+          childBox.setVelocityX(0);
+      });
+
+
+
+
+
         if (this.keyA.isDown){
             dude.setVelocityX(-160);
         }

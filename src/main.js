@@ -15,7 +15,6 @@ let config = {
 
 var dude;
 var platforms;
-var boxes;
 var pressurePlate;
 var cursors;
 var squat = false;

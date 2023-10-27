@@ -32,7 +32,7 @@ class Character extends Phaser.Physics.Arcade.Sprite{
         if(this.currentSpell.length == 2){
             let firstRune = this.currentSpell[0];
             let secondRune = this.currentSpell[1];
-            runeScript(firstRune, secondRune);
+            runeScript(firstRune, secondRune, this);
             this.removeSpell();
         } else if(this.currentSpell.length == 1){
             this.removeSpell();
@@ -54,4 +54,17 @@ class Character extends Phaser.Physics.Arcade.Sprite{
         this.currentSpell = [];
     }
 
+    spawnCube(){
+        let box = this.parerntScene.physics.add.sprite(this.selector.x, this.selector.y, "box").setScale(2);
+        handlePhysicsColliders(this.parerntScene, this, box);
+        this.parerntScene.boxes.add(box);
+    }
+
+}
+
+function handlePhysicsColliders(scene, character, object){
+    scene.physics.add.overlap(object, pressurePlate, scene.whatup, null, scene);
+    scene.physics.add.collider(object, platforms);
+    scene.physics.add.collider(pressurePlate, object);
+    scene.physics.add.collider(character, object);
 }

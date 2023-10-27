@@ -7,7 +7,7 @@ class Rune extends Phaser.GameObjects.Sprite{
     }
 }
 
-function runeScript(rune1, rune2){
+function runeScript(rune1, rune2, character){
     let runeCombo = rune1.name + " " + rune2.name;
     switch(runeCombo){
         case"heat ice": 
@@ -45,6 +45,7 @@ function runeScript(rune1, rune2){
             break;
         case"draw shape":
             console.log("create object");
+            character.spawnCube();
             break;
     }
 }
