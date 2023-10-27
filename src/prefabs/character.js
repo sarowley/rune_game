@@ -1,5 +1,5 @@
 class Character extends Phaser.Physics.Arcade.Sprite{
-    constructor(scene, x, y, texture){
+    constructor(scene, x, y, texture, selector){
         super(scene, x, y, texture);
         scene.add.existing(this);
         scene.physics.add.existing(this).setOrigin(0.5);
@@ -7,6 +7,7 @@ class Character extends Phaser.Physics.Arcade.Sprite{
         this.currentSpell = [];
         this.currentlyCasting = false;
         this.parerntScene = scene;
+        this.selector = selector;
     }
 
     addRune(rune){
@@ -16,6 +17,7 @@ class Character extends Phaser.Physics.Arcade.Sprite{
                 rune.setVisible(true);
             }
             else if(this.currentSpell.length == 0){
+                // this.selector.setVisible(true);
                 this.currentlyCasting = true;
                 this.parerntScene.physics.pause();
                 this.currentSpell.push(rune);
@@ -42,6 +44,7 @@ class Character extends Phaser.Physics.Arcade.Sprite{
 
     removeSpell(){
         this.currentlyCasting = false;
+        // this.selector.setVisible(false);
         this.parerntScene.physics.resume();
         for(let rune of this.currentSpell){
             rune.setVisible(false);

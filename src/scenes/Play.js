@@ -9,7 +9,14 @@ class Play extends Phaser.Scene {
   }
   create() {
 
-    dude = new Character(this, 450, 450, "wizard").setScale(2);
+    let canvas = this.sys.canvas;
+    canvas.style.cursor = 'none';
+
+
+    this.mySelector = new Selector(this, 100, 200, "test-rune");
+
+
+    dude = new Character(this, 450, 450, "wizard", this.mySelector).setScale(2);
 
     platforms = this.physics.add.staticGroup();
 
@@ -56,9 +63,12 @@ class Play extends Phaser.Scene {
     this.drawRune = new Rune(this, 250, 100, "test-rune", "draw");
 
 
-
-    this.mySelector = new Selector(this, 100, 200, "test-rune");
-
+  //   this.add.particles(400, 200, 'wizard', {
+  //     frequency:10,
+  //     speed: 50,
+  //     lifespan: 30000,
+  //     gravityY: 20
+  // });
 
   }
 
@@ -110,10 +120,7 @@ class Play extends Phaser.Scene {
         }
         displayRunes(dude.x, dude.y, dude.currentSpell);
 
-        if (cursors.up.isDown && dude.body.touching.down){
-          dude.setVelocityY(-250);
-        }
-
+        
     
   }
 
