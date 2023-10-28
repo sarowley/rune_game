@@ -26,7 +26,7 @@ class Play extends Phaser.Scene {
 
 
    
-    dude = new Character(this, 450, 450, "wizardss", this.mySelector).setScale(2);
+    dude = new Character(this, 450, 450, "wizardss", this.mySelector);
 
     this.anims.create({
       key: 'wizardWalk',

@@ -15,6 +15,7 @@ function runeScript(rune1, rune2, character){
             break;
         case"heat shape":
             console.log("destroy");
+            character.destroyCube();
             break;
         case"heat draw":
             console.log("enhance self");

@@ -6,7 +6,7 @@ class Character extends Phaser.Physics.Arcade.Sprite{
 
         this.currentSpell = [];
         this.currentlyCasting = false;
-        this.parerntScene = scene;
+        this.parentScene = scene;
         this.selector = selector;
     }
 
@@ -19,7 +19,7 @@ class Character extends Phaser.Physics.Arcade.Sprite{
             else if(this.currentSpell.length == 0){
                 // this.selector.setVisible(true);
                 this.currentlyCasting = true;
-                this.parerntScene.physics.pause();
+                this.parentScene.physics.pause();
                 this.currentSpell.push(rune);
                 rune.setVisible(true);
             }
@@ -47,7 +47,7 @@ class Character extends Phaser.Physics.Arcade.Sprite{
     removeSpell(){
         this.currentlyCasting = false;
         // this.selector.setVisible(false);
-        this.parerntScene.physics.resume();
+        this.parentScene.physics.resume();
         for(let rune of this.currentSpell){
             rune.setVisible(false);
         }
@@ -55,9 +55,23 @@ class Character extends Phaser.Physics.Arcade.Sprite{
     }
 
     spawnCube(){
-        let box = this.parerntScene.physics.add.sprite(this.selector.x, this.selector.y, "box").setScale(2);
-        handlePhysicsColliders(this.parerntScene, this, box);
-        this.parerntScene.boxes.add(box);
+        let box = this.parentScene.physics.add.sprite(this.selector.x, this.selector.y, "box").setScale(2);
+        box.name = "box";
+        handlePhysicsColliders(this.parentScene, this, box);
+        this.parentScene.boxes.add(box);
+        console.log(box);
+    }
+
+    destroyCube(){
+        let objectsHit = this.parentScene.physics.overlapRect(this.selector.x - 25, this.selector.y - 25, 50, 50, true, false);
+        console.log(objectsHit);
+        for(let item of objectsHit){
+            console.log(item);
+            if(item.gameObject.name == "box"){
+                console.log("delete Box");
+                item.gameObject.destroy();
+            }
+        }
     }
 
 }
