@@ -3,6 +3,7 @@ class Selector extends Phaser.GameObjects.Sprite{
         super(scene, x, y, texture);
         // scene.physics.add.existing(this);
         scene.add.existing(this);
+        this.setDepth(100);
     }
 
     updatePosition(x, y){
