@@ -36,6 +36,8 @@ class Play extends Phaser.Scene {
 
     this.physics.add.collider(dude, baseLayer);
 
+    this.physics.world.setFPS(120);
+
     this.anims.create({
       key: 'wizardWalk',
       frames: this.anims.generateFrameNumbers('wizardss', {start: 0, end: 2, first: 0}),
@@ -112,6 +114,14 @@ class Play extends Phaser.Scene {
 
       this.boxes.children.each(childBox => {
           childBox.setVelocityX(0);
+          if(childBox.burning){
+              childBox.health -= 1;
+              console.log(childBox.health);
+              if(childBox.health <= 0){
+                childBox.destroy();
+                childBox.fire.destroy();
+              }
+          }
       });
 
 

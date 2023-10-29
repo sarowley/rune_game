@@ -55,7 +55,7 @@ class Character extends Phaser.Physics.Arcade.Sprite{
     }
 
     spawnIceBox(){
-        let box = new Box(this.parentScene, this.selector.x, this.selector.y, "box", "box", this, 100);
+        let box = new Box(this.parentScene, this.selector.x, this.selector.y, "box", "box", this, 1000);
     }
 
     destroyCube(name){
@@ -70,15 +70,18 @@ class Character extends Phaser.Physics.Arcade.Sprite{
         }
     }
 
-    spawnFire(){
-        let fire = this.parentScene.physics.add.sprite(this.selector.x, this.selector.y, "fire");
-        let objectsNear = this.parentScene.physics.overlapRect(this.selector.x - 25, this.selector.y - 25, 50, 50, true, false);
-
-        for(let item of objectsHit){
+    spawnFire(x, y, width, height){
+        // let rectangle = this.parentScene.add.rectangle(this.selector.x, this.selector.y, 50, 50, 0xfacade);
+        let objectsNear = this.parentScene.physics.overlapRect(x, y, width, height, true, false);
+        for(let item of objectsNear){
             console.log(item);
-            if(item.gameObject.name == name){
-                console.log("delete Box");
-                item.gameObject.destroy();
+            if(item.gameObject.name == "box" && !item.gameObject.burning){
+                let fire = this.parentScene.physics.add.sprite(item.x, item.y, "fire");
+                item.gameObject.applyFire(fire);
+                fire.body.allowGravity = false;
+                item.gameObject.burning = true;
+                console.log("box Catch Fire");
+                this.spawnFire(item.x, item.y, width, height);
             }
         }
     }

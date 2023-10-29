@@ -30,6 +30,7 @@ function runeScript(rune1, rune2, character){
             break;
         case"shape heat":
             console.log("spawn fire");
+            character.spawnFire(character.selector.x - 25, character.selector.y - 25, 50, 50);
             break;
         case"shape ice":
             console.log("spawn ice box");
