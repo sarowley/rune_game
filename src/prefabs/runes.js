@@ -7,18 +7,20 @@ class Rune extends Phaser.GameObjects.Sprite{
     }
 }
 
+/*
+Ice Rune Spells (Ice Shape = freeze, Shape Ice=box, heat ice = melt)
+-Heat Rune Spells (Heat Shape = destroy movable object, Shape Heat = summon fire, Ice heat = put out fire)
+*/
+
 function runeScript(rune1, rune2, character){
     let runeCombo = rune1.name + " " + rune2.name;
     switch(runeCombo){
         case"heat ice": 
-            console.log("create steam");
+            console.log("melt box");
             break;
         case"heat shape":
             console.log("destroy");
-            character.destroyCube();
-            break;
-        case"heat draw":
-            console.log("enhance self");
+            character.destroyCube("box");
             break;
         case"ice heat":
             console.log("put out fire");
@@ -26,15 +28,15 @@ function runeScript(rune1, rune2, character){
         case"ice shape":
             console.log("freeze object");
             break;
-        case"ice draw":
-            console.log("stop movement effects");
-            break;
         case"shape heat":
-            console.log("move fire");
+            console.log("spawn fire");
             break;
         case"shape ice":
-            console.log("move ice");
+            console.log("spawn ice box");
+            character.spawnIceBox();
             break;
+
+        //cutting the draw rune for time
         case"shape draw":
             console.log("create pull effect");
             break;
@@ -46,7 +48,12 @@ function runeScript(rune1, rune2, character){
             break;
         case"draw shape":
             console.log("create object");
-            character.spawnCube();
+            break;
+        case"ice draw":
+            console.log("stop movement effects");
+            break;
+        case"heat draw":
+            console.log("enhance self");
             break;
     }
 }

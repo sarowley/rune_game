@@ -54,31 +54,23 @@ class Character extends Phaser.Physics.Arcade.Sprite{
         this.currentSpell = [];
     }
 
-    spawnCube(){
-        let box = this.parentScene.physics.add.sprite(this.selector.x, this.selector.y, "box").setScale(2);
-        box.name = "box";
-        handlePhysicsColliders(this.parentScene, this, box);
+    spawnIceBox(){
+        // let box = this.parentScene.physics.add.sprite(this.selector.x, this.selector.y, "box");
+        let box = new Box(this.parentScene, this.selector.x, this.selector.y, "box", "box", this, 100);
+        box.handlePhysicsColliders(this.parentScene, this, box);
         this.parentScene.boxes.add(box);
-        console.log(box);
     }
 
-    destroyCube(){
+    destroyCube(name){
         let objectsHit = this.parentScene.physics.overlapRect(this.selector.x - 25, this.selector.y - 25, 50, 50, true, false);
         console.log(objectsHit);
         for(let item of objectsHit){
             console.log(item);
-            if(item.gameObject.name == "box"){
+            if(item.gameObject.name == name){
                 console.log("delete Box");
                 item.gameObject.destroy();
             }
         }
     }
 
-}
-
-function handlePhysicsColliders(scene, character, object){
-    scene.physics.add.overlap(object, pressurePlate, scene.whatup, null, scene);
-    scene.physics.add.collider(object, platforms);
-    scene.physics.add.collider(pressurePlate, object);
-    scene.physics.add.collider(character, object);
 }
