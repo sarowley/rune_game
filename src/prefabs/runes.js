@@ -17,6 +17,7 @@ function runeScript(rune1, rune2, character){
     switch(runeCombo){
         case"heat ice": 
             console.log("melt box");
+            character.destroyCube("iceBox");
             break;
         case"heat shape":
             console.log("destroy");

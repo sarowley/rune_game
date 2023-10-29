@@ -55,7 +55,7 @@ class Character extends Phaser.Physics.Arcade.Sprite{
     }
 
     spawnIceBox(){
-        let box = new Box(this.parentScene, this.selector.x, this.selector.y, "box", "box", this, 1000);
+        let box = new Box(this.parentScene, this.selector.x, this.selector.y, "iceBox", "iceBox", this, 1000);
     }
 
     destroyCube(name){

@@ -30,6 +30,12 @@ class Play extends Phaser.Scene {
       startFrame: 0,
       endFrame: 4,
     });
+    this.load.spritesheet("iceBox", "./assets/cubes.png", {
+      frameWidth: 16,
+      frameHeight: 16,
+      startFrame: 3,
+      endFrame: 0,
+    });
     this.load.spritesheet("runes", "./assets/runes.png", {
       frameWidth: 16,
       frameHeight: 16,
@@ -85,6 +91,9 @@ class Play extends Phaser.Scene {
     //setting up boxes
     this.boxes = this.physics.add.group({ pushable: true, allowGravity: true });
     this.boxes.add(this.box);
+
+    let newBox = new Box(this, 200, 200, "box", "box", dude, 1000);
+    this.boxes.add(newBox);
 
     //cameras
     this.cameras.main.setBounds(0, 0, 560, 400).setOrigin(0.5);
@@ -221,47 +230,47 @@ class Play extends Phaser.Scene {
 
 
 
-        if (this.keyA.isDown){
-            dude.setVelocityX(-160);
-        }
-        else if (this.keyD.isDown){
-            dude.setVelocityX(160);
-        } 
-        else if (this.keyS.isDown) {
-            dude.setScale(2, 1.5);
-            squat = true;
-        }
-        else {
-            dude.setVelocityX(0);
-            dude.setScale(2);
-            this.noFall();
-        }
-        if (this.keyW.isDown && dude.body.touching.down)
-        {
-            dude.setVelocityY(-250);
-        }
-        if(Phaser.Input.Keyboard.JustDown(this.keyA)){
-          dude.flipX = true;
-        }
-        if(Phaser.Input.Keyboard.JustDown(this.keyD)){
-          dude.resetFlip();
-        }
+        // if (this.keyA.isDown){
+        //     dude.setVelocityX(-160);
+        // }
+        // else if (this.keyD.isDown){
+        //     dude.setVelocityX(160);
+        // } 
+        // else if (this.keyS.isDown) {
+        //     dude.setScale(1, 0.5);
+        //     squat = true;
+        // }
+        // else {
+        //     dude.setVelocityX(0);
+        //     dude.setScale(1);
+        //     this.noFall();
+        // }
+        // if (this.keyW.isDown && dude.body.touching.down)
+        // {
+        //     dude.setVelocityY(-250);
+        // }
+        // if(Phaser.Input.Keyboard.JustDown(this.keyA)){
+        //   dude.flipX = true;
+        // }
+        // if(Phaser.Input.Keyboard.JustDown(this.keyD)){
+        //   dude.resetFlip();
+        // }
 
-        if(Phaser.Input.Keyboard.JustDown(this.key1)){
-            dude.addRune(this.heatRune);
-        }
-        if(Phaser.Input.Keyboard.JustDown(this.key2)){
-            dude.addRune(this.iceRune);
-        }
-        if(Phaser.Input.Keyboard.JustDown(this.key3)){
-            dude.addRune(this.shapeRune);
-        }
-        if(Phaser.Input.Keyboard.JustDown(this.key4)){
-            dude.addRune(this.drawRune);
-        }
-        if(Phaser.Input.Keyboard.JustDown(this.keySpace)){
-            dude.castSpell();
-        }
+        // if(Phaser.Input.Keyboard.JustDown(this.key1)){
+        //     dude.addRune(this.heatRune);
+        // }
+        // if(Phaser.Input.Keyboard.JustDown(this.key2)){
+        //     dude.addRune(this.iceRune);
+        // }
+        // if(Phaser.Input.Keyboard.JustDown(this.key3)){
+        //     dude.addRune(this.shapeRune);
+        // }
+        // if(Phaser.Input.Keyboard.JustDown(this.key4)){
+        //     dude.addRune(this.drawRune);
+        // }
+        // if(Phaser.Input.Keyboard.JustDown(this.keySpace)){
+        //     dude.castSpell();
+        // }
         displayRunes(dude.x, dude.y, dude.currentSpell);
 
         
