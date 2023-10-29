@@ -55,14 +55,11 @@ class Character extends Phaser.Physics.Arcade.Sprite{
     }
 
     spawnIceBox(){
-        // let box = this.parentScene.physics.add.sprite(this.selector.x, this.selector.y, "box");
         let box = new Box(this.parentScene, this.selector.x, this.selector.y, "box", "box", this, 100);
-        box.handlePhysicsColliders(this.parentScene, this, box);
-        this.parentScene.boxes.add(box);
     }
 
     destroyCube(name){
-        let objectsHit = this.parentScene.physics.overlapRect(this.selector.x - 25, this.selector.y - 25, 50, 50, true, false);
+        let objectsHit = this.parentScene.physics.overlapRect(this.selector.x - 2, this.selector.y - 2, 4, 4, true, false);
         console.log(objectsHit);
         for(let item of objectsHit){
             console.log(item);
@@ -72,5 +69,20 @@ class Character extends Phaser.Physics.Arcade.Sprite{
             }
         }
     }
+
+    spawnFire(){
+        let fire = this.parentScene.physics.add.sprite(this.selector.x, this.selector.y, "fire");
+        let objectsNear = this.parentScene.physics.overlapRect(this.selector.x - 25, this.selector.y - 25, 50, 50, true, false);
+
+        for(let item of objectsHit){
+            console.log(item);
+            if(item.gameObject.name == name){
+                console.log("delete Box");
+                item.gameObject.destroy();
+            }
+        }
+    }
+
+
 
 }
