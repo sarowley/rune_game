@@ -32,7 +32,7 @@ class Play extends Phaser.Scene {
 
     this.mySelector = new Selector(this, 100, 200, "test-rune");
    
-    dude = new Character(this, 450, 450, "wizardss", this.mySelector);
+    dude = new Character(this, 0, 0, "wizardss", this.mySelector);
 
     this.physics.add.collider(dude, baseLayer);
 
@@ -50,7 +50,7 @@ class Play extends Phaser.Scene {
     this.boxes.add(this.box);
 
 
-    pressurePlate = this.physics.add.staticSprite(750, 582, "plate").setOrigin(1,1).setScale(2);
+    pressurePlate = this.physics.add.staticSprite(2000, 200, "plate");
 
     this.physics.add.overlap(this.box, pressurePlate, this.whatup, null, this);
     this.physics.add.overlap(dude, pressurePlate, this.whatup, null, this);
@@ -58,20 +58,14 @@ class Play extends Phaser.Scene {
     this.cameras.main.setBounds(-500, -500, 1600, 1200);
     this.cameras.main.startFollow(dude);
 
-
-    platforms.create(400, 980, "image").setScale(25).refreshBody();
-
-    platforms.create(700, 500, "platform").setScale(2);
-    platforms.create(200, 450, "platform").setScale(2);
-    platforms.create(300, 550, "platform").setScale(2);
-    platforms.create(600, 450, "platform").setScale(2);
-    platforms.create(400, 350, "platform").setScale(2);
+    platforms.create(2000, 2000, "platform").setScale(2);
 
     this.physics.add.collider(dude, platforms);
     this.physics.add.collider(dude, this.box);
     this.physics.add.collider(this.box, platforms);
     this.physics.add.collider(pressurePlate, this.box);
     this.physics.add.collider(this.boxes, this.boxes);
+    this.physics.add.collider(baseLayer, this.boxes);
 
     cursors = this.input.keyboard.createCursorKeys();
 
@@ -90,14 +84,6 @@ class Play extends Phaser.Scene {
     this.iceRune = new Rune(this, 150, 100, "runes", "ice").setFrame(1);
     this.shapeRune = new Rune(this, 200, 100, "runes", "shape").setFrame(2);
     this.drawRune = new Rune(this, 250, 100, "runes", "draw").setFrame(3);
-
-
-  //   this.add.particles(400, 200, 'wizard', {
-  //     frequency:10,
-  //     speed: 50,
-  //     lifespan: 30000,
-  //     gravityY: 20
-  // });
 
   }
 
