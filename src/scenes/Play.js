@@ -11,6 +11,9 @@ class Play extends Phaser.Scene {
     this.load.image("scroll", "./assets/scrollUI-1.png");
     this.load.image("fire", "./assets/Fire1.png");
     this.load.image("platform", "./assets/FloorTile-1.png.png");
+    this.load.image("spell_list", "./assets/the_dude.jpg");
+    this.load.image("pause", "./assets/the_dude.jpg");
+
     //load spritesheets
     this.load.spritesheet("wizardss", "./assets/wizardSpritesheet.png", {
       frameWidth: 16,
@@ -42,11 +45,15 @@ class Play extends Phaser.Scene {
       startFrame: 0,
       endFrame: 1,
     });
+
     //loading tilemap
     this.load.image("tileset", "./assets/tileset.png");
     this.load.tilemapTiledJSON("tilemap", "./assets/tilemap.json");
   }
   create() {
+    //set fps (prevent tunneling)
+    this.physics.world.setFPS(120);
+
     //changing cursor
     let canvas = this.sys.canvas;
     canvas.style.cursor = "none";
@@ -61,6 +68,11 @@ class Play extends Phaser.Scene {
     //create wizard
     dude = new Character(this, 350, 48, "wizardss", this.mySelector);
 
+    //world bounds
+    this.physics.world.setBounds(0, 0, 560, 500);
+    dude.setCollideWorldBounds(true);
+
+    //animate wizard
     this.anims.create({
       key: "wizardWalk",
       frames: this.anims.generateFrameNumbers("wizardss", {
@@ -71,6 +83,14 @@ class Play extends Phaser.Scene {
       frameRate: 6,
       repeat: -1,
     });
+
+    //images
+    this.spell_list = this.add
+      .tileSprite(0, 0, 701, 508, "spell_list")
+      .setOrigin(0, 0);
+    this.spell_list.setVisible(false);
+    this.pause = this.add.tileSprite(0, 0, 701, 508, "pause").setOrigin(0, 0);
+    this.pause.setVisible(false);
 
     //ignore this
     platforms = this.physics.add.staticGroup();
@@ -179,22 +199,24 @@ class Play extends Phaser.Scene {
     if (Phaser.Input.Keyboard.JustDown(this.keyTab)) {
       if (paused) {
         this.physics.resume();
-        console.log("unpaused");
+        this.spell_list.setVisible(false);
+        this.pause.setVisible(false);
         paused = false;
       } else if (!paused) {
         this.physics.pause();
-        console.log("paused");
+        this.spell_list.setVisible(true);
         paused = true;
       }
     }
     if (Phaser.Input.Keyboard.JustDown(this.keyEscape)) {
       if (paused) {
         this.physics.resume();
-        console.log("unpaused");
+        this.pause.setVisible(false);
+        this.spell_list.setVisible(false);
         paused = false;
       } else if (!paused) {
         this.physics.pause();
-        console.log("paused");
+        this.pause.setVisible(true);
         paused = true;
       }
     }
