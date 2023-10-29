@@ -15,18 +15,26 @@ class Play extends Phaser.Scene {
     this.load.spritesheet("box", "./assets/cubes.png", {frameWidth: 16, frameHeight: 16, startFrame: 0, endFrame: 4});
     this.load.spritesheet("runes", "./assets/runes.png", {frameWidth: 16, frameHeight: 16, startFrame: 0, endFrame: 3});
     this.load.spritesheet("plate", "./assets/pressureplate.png", {frameWidth: 16, frameHeight: 4, startFrame: 0, endFrame: 1});
+
+    this.load.image("tileset", "./assets/tileset.png")
+    this.load.tilemapTiledJSON("tilemap", "./assets/tilemap.json");
   }
   create() {
     
     let canvas = this.sys.canvas;
     canvas.style.cursor = 'none';
 
+    const map = this.add.tilemap("tilemap");
+    const tileset = map.addTilesetImage('tileset', "tileset");
+    const baseLayer = map.createLayer("base", tileset, 0,0);
+    baseLayer.setCollisionByProperty({collision: true});
+
 
     this.mySelector = new Selector(this, 100, 200, "test-rune");
-
-
    
     dude = new Character(this, 450, 450, "wizardss", this.mySelector);
+
+    this.physics.add.collider(dude, baseLayer);
 
     this.anims.create({
       key: 'wizardWalk',
