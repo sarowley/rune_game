@@ -11,6 +11,9 @@ class Play extends Phaser.Scene {
     this.load.image("scroll", "./assets/scrollUI-1.png");
     this.load.image("fire", "./assets/Fire1.png");
     this.load.image("platform", "./assets/FloorTile-1.png.png");
+    this.load.image("spell_list", "./assets/the_dude.jpg");
+    this.load.image("pause", "./assets/the_dude.jpg");
+
     //load spritesheets
     this.load.spritesheet("wizardss", "./assets/wizardSpritesheet.png", {
       frameWidth: 16,
@@ -48,11 +51,15 @@ class Play extends Phaser.Scene {
       startFrame: 0,
       endFrame: 1,
     });
+
     //loading tilemap
     this.load.image("tileset", "./assets/tileset.png");
     this.load.tilemapTiledJSON("tilemap", "./assets/tilemap.json");
   }
   create() {
+    //set fps (prevent tunneling)
+    this.physics.world.setFPS(120);
+
     //changing cursor
     let canvas = this.sys.canvas;
     canvas.style.cursor = "none";
@@ -66,8 +73,13 @@ class Play extends Phaser.Scene {
 
     //create wizard
     dude = new Character(this, 350, 48, "wizardss", this.mySelector);
-
     this.physics.world.setFPS(120);
+
+    //world bounds
+    this.physics.world.setBounds(0, 0, 560, 500);
+    dude.setCollideWorldBounds(true);
+
+    //animate wizard
 
     this.anims.create({
       key: "wizardWalk",
@@ -79,6 +91,14 @@ class Play extends Phaser.Scene {
       frameRate: 6,
       repeat: -1,
     });
+
+    //images
+    this.spell_list = this.add
+      .tileSprite(0, 0, 701, 508, "spell_list")
+      .setOrigin(0, 0);
+    this.spell_list.setVisible(false);
+    this.pause = this.add.tileSprite(0, 0, 701, 508, "pause").setOrigin(0, 0);
+    this.pause.setVisible(false);
 
     //ignore this
     platforms = this.physics.add.staticGroup();
@@ -190,22 +210,24 @@ class Play extends Phaser.Scene {
     if (Phaser.Input.Keyboard.JustDown(this.keyTab)) {
       if (paused) {
         this.physics.resume();
-        console.log("unpaused");
+        this.spell_list.setVisible(false);
+        this.pause.setVisible(false);
         paused = false;
       } else if (!paused) {
         this.physics.pause();
-        console.log("paused");
+        this.spell_list.setVisible(true);
         paused = true;
       }
     }
     if (Phaser.Input.Keyboard.JustDown(this.keyEscape)) {
       if (paused) {
         this.physics.resume();
-        console.log("unpaused");
+        this.pause.setVisible(false);
+        this.spell_list.setVisible(false);
         paused = false;
       } else if (!paused) {
         this.physics.pause();
-        console.log("paused");
+        this.pause.setVisible(true);
         paused = true;
       }
     }
@@ -225,56 +247,7 @@ class Play extends Phaser.Scene {
               }
           }
       });
-
-
-
-
-
-        // if (this.keyA.isDown){
-        //     dude.setVelocityX(-160);
-        // }
-        // else if (this.keyD.isDown){
-        //     dude.setVelocityX(160);
-        // } 
-        // else if (this.keyS.isDown) {
-        //     dude.setScale(1, 0.5);
-        //     squat = true;
-        // }
-        // else {
-        //     dude.setVelocityX(0);
-        //     dude.setScale(1);
-        //     this.noFall();
-        // }
-        // if (this.keyW.isDown && dude.body.touching.down)
-        // {
-        //     dude.setVelocityY(-250);
-        // }
-        // if(Phaser.Input.Keyboard.JustDown(this.keyA)){
-        //   dude.flipX = true;
-        // }
-        // if(Phaser.Input.Keyboard.JustDown(this.keyD)){
-        //   dude.resetFlip();
-        // }
-
-        // if(Phaser.Input.Keyboard.JustDown(this.key1)){
-        //     dude.addRune(this.heatRune);
-        // }
-        // if(Phaser.Input.Keyboard.JustDown(this.key2)){
-        //     dude.addRune(this.iceRune);
-        // }
-        // if(Phaser.Input.Keyboard.JustDown(this.key3)){
-        //     dude.addRune(this.shapeRune);
-        // }
-        // if(Phaser.Input.Keyboard.JustDown(this.key4)){
-        //     dude.addRune(this.drawRune);
-        // }
-        // if(Phaser.Input.Keyboard.JustDown(this.keySpace)){
-        //     dude.castSpell();
-        // }
-        displayRunes(dude.x, dude.y, dude.currentSpell);
-
-        
-    
+      
     //boxes
     this.boxes.children.each((childBox) => {
       childBox.setVelocityX(0);
