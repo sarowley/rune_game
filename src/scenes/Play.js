@@ -32,9 +32,7 @@ class Play extends Phaser.Scene {
 
     this.mySelector = new Selector(this, 100, 200, "test-rune");
    
-    dude = new Character(this, 0, 0, "wizardss", this.mySelector);
-
-    this.physics.add.collider(dude, baseLayer);
+    dude = new Character(this, 350, 48, "wizardss", this.mySelector);
 
     this.anims.create({
       key: 'wizardWalk',
@@ -46,7 +44,7 @@ class Play extends Phaser.Scene {
     platforms = this.physics.add.staticGroup();
 
     this.boxes = this.physics.add.group({pushable: true, allowGravity: true});
-    this.box = this.physics.add.sprite(550, 500, "box").setScale(2);
+    this.box = this.physics.add.sprite(550, 500, "box");
     this.boxes.add(this.box);
 
 
@@ -55,10 +53,11 @@ class Play extends Phaser.Scene {
     this.physics.add.overlap(this.box, pressurePlate, this.whatup, null, this);
     this.physics.add.overlap(dude, pressurePlate, this.whatup, null, this);
 
-    this.cameras.main.setBounds(-500, -500, 1600, 1200);
+    this.cameras.main.setBounds(0, 0, 560, 400).setOrigin(.5);
+    this.cameras.main.setZoom(2);
     this.cameras.main.startFollow(dude);
 
-    platforms.create(2000, 2000, "platform").setScale(2);
+    platforms.create(2000, 2000, "platform");
 
     this.physics.add.collider(dude, platforms);
     this.physics.add.collider(dude, this.box);
@@ -66,6 +65,8 @@ class Play extends Phaser.Scene {
     this.physics.add.collider(pressurePlate, this.box);
     this.physics.add.collider(this.boxes, this.boxes);
     this.physics.add.collider(baseLayer, this.boxes);
+    this.physics.add.collider(dude, baseLayer);
+  
 
     cursors = this.input.keyboard.createCursorKeys();
 
@@ -89,7 +90,6 @@ class Play extends Phaser.Scene {
 
     update() {
 
-
       let mouseX = game.input.mousePointer.worldX;
       let mouseY = game.input.mousePointer.worldY;
 
@@ -100,28 +100,24 @@ class Play extends Phaser.Scene {
           childBox.setVelocityX(0);
       });
 
-
-
-
-
         if (this.keyA.isDown){
-            dude.setVelocityX(-160);
+            dude.setVelocityX(-80);
         }
         else if (this.keyD.isDown){
-            dude.setVelocityX(160);
+            dude.setVelocityX(80);
         } 
         else if (this.keyS.isDown) {
-            dude.setScale(2, 1.5);
+            dude.setScale(1, 0.5);
             squat = true;
         }
         else {
             dude.setVelocityX(0);
-            dude.setScale(2);
+            dude.setScale(1);
             this.noFall();
         }
-        if (this.keyW.isDown && dude.body.touching.down)
+        if (this.keyW.isDown && dude.body.blocked.down)
         {
-            dude.setVelocityY(-250);
+            dude.setVelocityY(-150);
         }
         if(Phaser.Input.Keyboard.JustDown(this.keyA)){
           dude.flipX = true;
@@ -161,6 +157,5 @@ class Play extends Phaser.Scene {
         squat = false;
     }
   }
-
 }
 
