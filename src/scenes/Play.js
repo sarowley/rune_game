@@ -67,7 +67,13 @@ class Play extends Phaser.Scene {
 
     //create wizard
     dude = new Character(this, 350, 48, "wizardss", this.mySelector);
+    this.physics.world.setFPS(120);
 
+    //world bounds
+    this.physics.world.setBounds(0, 0, 560, 500);
+    dude.setCollideWorldBounds(true);
+
+    //animate wizard
 
     this.anims.create({
       key: "wizardWalk",
@@ -232,56 +238,7 @@ class Play extends Phaser.Scene {
               }
           }
       });
-
-
-
-
-
-        if (this.keyA.isDown){
-            dude.setVelocityX(-160);
-        }
-        else if (this.keyD.isDown){
-            dude.setVelocityX(160);
-        } 
-        else if (this.keyS.isDown) {
-            dude.setScale(2, 1.5);
-            squat = true;
-        }
-        else {
-            dude.setVelocityX(0);
-            dude.setScale(2);
-            this.noFall();
-        }
-        if (this.keyW.isDown && dude.body.touching.down)
-        {
-            dude.setVelocityY(-250);
-        }
-        if(Phaser.Input.Keyboard.JustDown(this.keyA)){
-          dude.flipX = true;
-        }
-        if(Phaser.Input.Keyboard.JustDown(this.keyD)){
-          dude.resetFlip();
-        }
-
-        if(Phaser.Input.Keyboard.JustDown(this.key1)){
-            dude.addRune(this.heatRune);
-        }
-        if(Phaser.Input.Keyboard.JustDown(this.key2)){
-            dude.addRune(this.iceRune);
-        }
-        if(Phaser.Input.Keyboard.JustDown(this.key3)){
-            dude.addRune(this.shapeRune);
-        }
-        if(Phaser.Input.Keyboard.JustDown(this.key4)){
-            dude.addRune(this.drawRune);
-        }
-        if(Phaser.Input.Keyboard.JustDown(this.keySpace)){
-            dude.castSpell();
-        }
-        displayRunes(dude.x, dude.y, dude.currentSpell);
-
-        
-    
+            
     //boxes
     this.boxes.children.each((childBox) => {
       childBox.setVelocityX(0);
