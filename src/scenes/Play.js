@@ -13,6 +13,7 @@ class Play extends Phaser.Scene {
     this.load.image("platform", "./assets/FloorTile-1.png.png");
     this.load.image("spell_list", "./assets/the_dude.jpg");
     this.load.image("pause", "./assets/the_dude.jpg");
+    this.load.image("podium", "./assets/podium.png");
 
     //load spritesheets
     this.load.spritesheet("wizardss", "./assets/wizardSpritesheet.png", {
@@ -74,7 +75,6 @@ class Play extends Phaser.Scene {
     dude.setCollideWorldBounds(true);
 
     //animate wizard
-
     this.anims.create({
       key: "wizardWalk",
       frames: this.anims.generateFrameNumbers("wizardss", {
@@ -97,18 +97,27 @@ class Play extends Phaser.Scene {
     //ignore this
     platforms = this.physics.add.staticGroup();
     platforms.create(2000, 2000, "platform");
-    this.box = this.physics.add.sprite(550, 500, "box");
-    pressurePlate = this.physics.add.staticSprite(2000, 200, "plate");
-    this.physics.add.overlap(this.box, pressurePlate, this.whatup, null, this);
-    this.physics.add.overlap(dude, pressurePlate, this.whatup, null, this);
+    this.box = this.physics.add.sprite(2000, 1990, "box");
 
     //setting up boxes
     this.boxes = this.physics.add.group({ pushable: true, allowGravity: true });
     this.boxes.add(this.box);
 
+    //making doors
+    door1 = this.physics.add.staticSprite(312, 128, "door");
+    door2 = this.physics.add.staticSprite(104, 368, "door");
+
+    //making pressure plates
+    pressurePlate = this.physics.add.staticSprite(400, 142, "plate");
+    pressurePlate1 = this.physics.add.staticSprite(10, 382, "plate");
+
+    //making podium
+    this.podium = this.physics.add.staticGroup();
+    this.podium.create(560 - 24, 400 - 32, "podium");
+
     //cameras
     this.cameras.main.setBounds(0, 0, 560, 400).setOrigin(0.5);
-    this.cameras.main.setZoom(2);
+    this.cameras.main.setZoom(2.75);
     this.cameras.main.startFollow(dude);
 
     //physics
@@ -119,6 +128,23 @@ class Play extends Phaser.Scene {
     this.physics.add.collider(this.boxes, this.boxes);
     this.physics.add.collider(baseLayer, this.boxes);
     this.physics.add.collider(dude, baseLayer);
+    collider = this.physics.add.collider(dude, door1);
+    collider = this.physics.add.collider(dude, door2);
+    this.physics.add.overlap(dude, this.podium, this.whatup2, null, this);
+    this.physics.add.overlap(
+      this.boxes,
+      pressurePlate,
+      this.whatup,
+      null,
+      this
+    );
+    this.physics.add.overlap(
+      this.boxes,
+      pressurePlate1,
+      this.whatup3,
+      null,
+      this
+    );
 
     //add keys
     cursors = this.input.keyboard.createCursorKeys();
@@ -140,6 +166,9 @@ class Play extends Phaser.Scene {
     );
     this.keyTab = this.input.keyboard.addKey(
       Phaser.Input.Keyboard.KeyCodes.TAB
+    );
+    this.keyBackspace = this.input.keyboard.addKey(
+      Phaser.Input.Keyboard.KeyCodes.BACKSPACE
     );
 
     //setting up runes
@@ -211,49 +240,71 @@ class Play extends Phaser.Scene {
       }
     }
     if (Phaser.Input.Keyboard.JustDown(this.keyEscape)) {
-      if (paused) {
+      if (esc_paused) {
         this.physics.resume();
         this.pause.setVisible(false);
         this.spell_list.setVisible(false);
-        paused = false;
-      } else if (!paused) {
+        esc_paused = false;
+      } else if (!esc_paused) {
         this.physics.pause();
         this.pause.setVisible(true);
-        paused = true;
+        esc_paused = true;
       }
+    }
+
+    //back to menu when paused
+    if (esc_paused) {
+      if (Phaser.Input.Keyboard.JustDown(this.keyBackspace)) {
+        console.log("whatup");
+        esc_paused = false;
+        this.scene.start("titleScene");
+      }
+    }
+
+    //fall catch
+    if (dude.y > 420) {
+      this.scene.restart();
     }
 
     //runes
     displayRunes(dude.x, dude.y, dude.currentSpell);
 
-
-      this.boxes.children.each(childBox => {
-          childBox.setVelocityX(0);
-          if(childBox.burning){
-              childBox.health -= 1;
-              console.log(childBox.health);
-              if(childBox.health <= 0){
-                childBox.destroy();
-                childBox.fire.destroy();
-              }
-          }
-      });
-            
     //boxes
+    this.boxes.children.each((childBox) => {
+      childBox.setVelocityX(0);
+      if (childBox.burning) {
+        childBox.health -= 1;
+        console.log(childBox.health);
+        if (childBox.health <= 0) {
+          childBox.destroy();
+          childBox.fire.destroy();
+        }
+      }
+    });
     this.boxes.children.each((childBox) => {
       childBox.setVelocityX(0);
     });
   }
 
-  //pressure plate function
+  //pressure plate functions
   whatup() {
-    console.log("pressure plate activate");
+    this.physics.world.removeCollider(collider);
+    door1.destroy();
+  }
+    whatup3() {
+      this.physics.world.removeCollider(collider);
+      door2.destroy();
+    }
+
+  //end game function
+  whatup2() {
+    this.scene.start("endScene");
   }
 
   //not clipping through the ground function
   noFall() {
-    if (squat && dude.body.touching.down) {
-      dude.setVelocityY(-100);
+    if (squat && dude.body.blocked.down) {
+      dude.setVelocityY(-50);
       squat = false;
     }
   }

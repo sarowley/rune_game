@@ -14,16 +14,6 @@ class Title extends Phaser.Scene {
             },
             fixedWidth: 0
         }
-        let smallConfig = {
-            fontFamily: 'Courier',
-            fontSize: '23px',
-            color: '#FFFFFF',
-            padding: {
-                top: 5,
-                bottom: 5,
-            },
-            fixedWidth: 0
-        }
 
         //adding text
         this.add.text(300, 200, 'temp title', menuConfig);

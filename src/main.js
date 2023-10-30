@@ -11,14 +11,19 @@ let config = {
             debug: false
         }
     },
-    scene: [Title, Play]
+    scene: [Title, Play, End]
 }
 
 var dude;
 var platforms;
 var pressurePlate;
+var pressurePlate1;
+var door1;
+var door2;
 var cursors;
 var squat = false;
+var collider;
 var keySPACE;
 var paused = false;
+var esc_paused = false;
 let game = new Phaser.Game(config);
