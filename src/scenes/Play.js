@@ -11,8 +11,8 @@ class Play extends Phaser.Scene {
     this.load.image("scroll", "./assets/scrollUI-1.png");
     this.load.image("fire", "./assets/Fire1.png");
     this.load.image("platform", "./assets/FloorTile-1.png.png");
-    this.load.image("spell_list", "./assets/the_dude.jpg");
-    this.load.image("pause", "./assets/the_dude.jpg");
+    this.load.image("spell_list", "./assets/spellsheet.png");
+    this.load.image("pause", "./assets/pause.png");
     this.load.image("podium", "./assets/podium.png");
     this.load.image("text", "./assets/text.png");
 
@@ -74,8 +74,7 @@ class Play extends Phaser.Scene {
     baseLayer.setCollisionByProperty({ collision: true });
 
     //create wizard
-    // dude = new Character(this, 350, 48, "wizardss", this.mySelector);
-    dude = new Character(this, 400, 380, "wizardss", this.mySelector);
+    dude = new Character(this, 350, 48, "wizardss", this.mySelector);
     this.physics.world.setFPS(120);
 
     //world bounds
@@ -96,11 +95,14 @@ class Play extends Phaser.Scene {
 
     //images
     this.spell_list = this.add
-      .tileSprite(0, 0, 701, 508, "spell_list")
+      .tileSprite(0, 0, 800, 600, "spell_list")
       .setOrigin(0, 0);
     this.spell_list.setVisible(false);
     this.spell_list.setDepth(1);
-    this.pause = this.add.tileSprite(0, 0, 701, 508, "pause").setOrigin(0, 0);
+    this.pause = this.add
+      .tileSprite(100, 50, 800, 600, "pause")
+      .setOrigin(0, 0)
+      .setScale(0.5);
     this.pause.setVisible(false);
     this.pause.setDepth(1);
 
@@ -223,6 +225,7 @@ class Play extends Phaser.Scene {
     if (this.keyW.isDown && dude.body.blocked.down) {
       dude.setVelocityY(-150);
     }
+
     //flip character
     if (Phaser.Input.Keyboard.JustDown(this.keyA)) {
       dude.flipX = true;
@@ -230,6 +233,7 @@ class Play extends Phaser.Scene {
     if (Phaser.Input.Keyboard.JustDown(this.keyD)) {
       dude.resetFlip();
     }
+
     //rune commands
     if (Phaser.Input.Keyboard.JustDown(this.key1)) {
       dude.addRune(this.heatRune);
@@ -240,9 +244,6 @@ class Play extends Phaser.Scene {
     if (Phaser.Input.Keyboard.JustDown(this.key3)) {
       dude.addRune(this.shapeRune);
     }
-    // if (Phaser.Input.Keyboard.JustDown(this.key4)) {
-    //   dude.addRune(this.drawRune);
-    // }
     if (Phaser.Input.Keyboard.JustDown(this.keySpace)) {
       dude.castSpell();
     }
@@ -251,11 +252,13 @@ class Play extends Phaser.Scene {
     if (Phaser.Input.Keyboard.JustDown(this.keyTab)) {
       if (paused) {
         this.physics.resume();
+        this.cameras.main.setZoom(2.75);
         this.spell_list.setVisible(false);
         this.pause.setVisible(false);
         paused = false;
-      } else if (!paused) {
+      } else if (!paused && !esc_paused) {
         this.physics.pause();
+        this.cameras.main.setZoom(1);
         this.spell_list.setVisible(true);
         paused = true;
       }
@@ -263,11 +266,13 @@ class Play extends Phaser.Scene {
     if (Phaser.Input.Keyboard.JustDown(this.keyEscape)) {
       if (esc_paused) {
         this.physics.resume();
+        this.cameras.main.setZoom(2.75);
         this.pause.setVisible(false);
         this.spell_list.setVisible(false);
         esc_paused = false;
-      } else if (!esc_paused) {
+      } else if (!esc_paused && !paused) {
         this.physics.pause();
+        this.cameras.main.setZoom(1.48);
         this.pause.setVisible(true);
         esc_paused = true;
       }
@@ -276,7 +281,6 @@ class Play extends Phaser.Scene {
     //back to menu when paused
     if (esc_paused) {
       if (Phaser.Input.Keyboard.JustDown(this.keyBackspace)) {
-        console.log("whatup");
         esc_paused = false;
         this.scene.start("titleScene");
       }
@@ -295,7 +299,6 @@ class Play extends Phaser.Scene {
       childBox.setVelocityX(0);
       if (childBox.burning) {
         childBox.health -= 1;
-        console.log(childBox.health);
         if (childBox.health <= 0) {
           childBox.destroy();
           childBox.fire.destroy();
