@@ -14,6 +14,7 @@ class Play extends Phaser.Scene {
     this.load.image("spell_list", "./assets/the_dude.jpg");
     this.load.image("pause", "./assets/the_dude.jpg");
     this.load.image("podium", "./assets/podium.png");
+    this.load.image("text", "./assets/text.png");
 
     //load spritesheets
     this.load.spritesheet("wizardss", "./assets/wizardSpritesheet.png", {
@@ -73,7 +74,8 @@ class Play extends Phaser.Scene {
     baseLayer.setCollisionByProperty({ collision: true });
 
     //create wizard
-    dude = new Character(this, 350, 48, "wizardss", this.mySelector);
+    // dude = new Character(this, 350, 48, "wizardss", this.mySelector);
+    dude = new Character(this, 400, 380, "wizardss", this.mySelector);
     this.physics.world.setFPS(120);
 
     //world bounds
@@ -97,8 +99,14 @@ class Play extends Phaser.Scene {
       .tileSprite(0, 0, 701, 508, "spell_list")
       .setOrigin(0, 0);
     this.spell_list.setVisible(false);
+    this.spell_list.setDepth(1);
     this.pause = this.add.tileSprite(0, 0, 701, 508, "pause").setOrigin(0, 0);
     this.pause.setVisible(false);
+    this.pause.setDepth(1);
+
+    //text
+    this.text = this.add.tileSprite(480, 370, 80, 40, "text");
+    this.text.setVisible(false);
 
     //ignore this
     platforms = this.physics.add.staticGroup();
@@ -109,12 +117,12 @@ class Play extends Phaser.Scene {
     this.boxes = this.physics.add.group({ pushable: true, allowGravity: true });
     this.boxes.add(this.box);
 
-    let newBox = null;
-    newBox = new Box(this, 200, 200, "box", "box", dude, 1000);
-    this.boxes.add(newBox);
+    // let newBox = null;
+    // newBox = new Box(this, 200, 200, "box", "box", dude, 1000);
+    // this.boxes.add(newBox);
 
-    newBox = new Box(this, 300, 200, "box", "box", dude, 1000);
-    this.boxes.add(newBox);
+    // newBox = new Box(this, 300, 200, "box", "box", dude, 1000);
+    // this.boxes.add(newBox);
 
     //making doors
     door1 = this.physics.add.staticSprite(312, 128, "door");
@@ -141,8 +149,8 @@ class Play extends Phaser.Scene {
     this.physics.add.collider(this.boxes, this.boxes);
     this.physics.add.collider(baseLayer, this.boxes);
     this.physics.add.collider(dude, baseLayer);
-    collider = this.physics.add.collider(dude, door1);
-    collider = this.physics.add.collider(dude, door2);
+    this.physics.add.collider(dude, door1);
+    this.physics.add.collider(dude, door2);
     this.physics.add.overlap(dude, this.podium, this.whatup2, null, this);
     this.physics.add.overlap(
       this.boxes,
@@ -304,14 +312,17 @@ class Play extends Phaser.Scene {
     this.physics.world.removeCollider(collider);
     door1.destroy();
   }
-    whatup3() {
-      this.physics.world.removeCollider(collider);
-      door2.destroy();
-    }
+  whatup3() {
+    this.physics.world.removeCollider(collider);
+    door2.destroy();
+  }
 
   //end game function
   whatup2() {
-    this.scene.start("endScene");
+    this.text.setVisible(true);
+    if (Phaser.Input.Keyboard.JustDown(this.keySpace)) {
+      this.scene.start("endScene");
+    }
   }
 
   //not clipping through the ground function
