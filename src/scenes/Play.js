@@ -112,7 +112,11 @@ class Play extends Phaser.Scene {
     this.boxes = this.physics.add.group({ pushable: true, allowGravity: true });
     this.boxes.add(this.box);
 
-    let newBox = new Box(this, 200, 200, "box", "box", dude, 1000);
+    let newBox = null;
+    newBox = new Box(this, 200, 200, "box", "box", dude, 1000);
+    this.boxes.add(newBox);
+
+    newBox = new Box(this, 300, 200, "box", "box", dude, 1000);
     this.boxes.add(newBox);
 
     //cameras
@@ -247,7 +251,7 @@ class Play extends Phaser.Scene {
               }
           }
       });
-      
+
     //boxes
     this.boxes.children.each((childBox) => {
       childBox.setVelocityX(0);

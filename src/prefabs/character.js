@@ -60,7 +60,6 @@ class Character extends Phaser.Physics.Arcade.Sprite{
 
     destroyCube(name){
         let objectsHit = this.parentScene.physics.overlapRect(this.selector.x - 2, this.selector.y - 2, 4, 4, true, false);
-        console.log(objectsHit);
         for(let item of objectsHit){
             console.log(item);
             if(item.gameObject.name == name){
@@ -74,14 +73,26 @@ class Character extends Phaser.Physics.Arcade.Sprite{
         // let rectangle = this.parentScene.add.rectangle(this.selector.x, this.selector.y, 50, 50, 0xfacade);
         let objectsNear = this.parentScene.physics.overlapRect(x, y, width, height, true, false);
         for(let item of objectsNear){
-            console.log(item);
             if(item.gameObject.name == "box" && !item.gameObject.burning){
-                let fire = this.parentScene.physics.add.sprite(item.x, item.y, "fire");
+                let fire = this.parentScene.physics.add.sprite(item.x+8, item.y+8, "fire");
+                fire.name = "fire";
                 item.gameObject.applyFire(fire);
                 fire.body.allowGravity = false;
                 item.gameObject.burning = true;
-                console.log("box Catch Fire");
                 this.spawnFire(item.x, item.y, width, height);
+            }
+        }
+    }
+
+    putOutFire(){
+        let objectsHit = this.parentScene.physics.overlapRect(this.selector.x, this.selector.y, 50, 50, true, false);
+        for(let item of objectsHit){
+            console.log(item);
+            if(item.gameObject.name == "fire"){
+                item.gameObject.destroy();
+            }
+            if(item.gameObject.name == "box"){
+                item.gameObject.burning = false;
             }
         }
     }

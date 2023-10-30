@@ -25,6 +25,7 @@ function runeScript(rune1, rune2, character){
             break;
         case"ice heat":
             console.log("put out fire");
+            character.putOutFire();
             break;
         case"ice shape":
             console.log("freeze object");
