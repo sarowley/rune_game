@@ -203,9 +203,9 @@ class Play extends Phaser.Scene {
     if (Phaser.Input.Keyboard.JustDown(this.key3)) {
       dude.addRune(this.shapeRune);
     }
-    if (Phaser.Input.Keyboard.JustDown(this.key4)) {
-      dude.addRune(this.drawRune);
-    }
+    // if (Phaser.Input.Keyboard.JustDown(this.key4)) {
+    //   dude.addRune(this.drawRune);
+    // }
     if (Phaser.Input.Keyboard.JustDown(this.keySpace)) {
       dude.castSpell();
     }

@@ -40,24 +40,24 @@ function runeScript(rune1, rune2, character){
             break;
 
         //cutting the draw rune for time
-        case"shape draw":
-            console.log("create pull effect");
-            break;
-        case"draw heat":
-            console.log("creates fire");
-            break;
-        case"draw ice":
-            console.log("create Ice");
-            break;
-        case"draw shape":
-            console.log("create object");
-            break;
-        case"ice draw":
-            console.log("stop movement effects");
-            break;
-        case"heat draw":
-            console.log("enhance self");
-            break;
+        // case"shape draw":
+        //     console.log("create pull effect");
+        //     break;
+        // case"draw heat":
+        //     console.log("creates fire");
+        //     break;
+        // case"draw ice":
+        //     console.log("create Ice");
+        //     break;
+        // case"draw shape":
+        //     console.log("create object");
+        //     break;
+        // case"ice draw":
+        //     console.log("stop movement effects");
+        //     break;
+        // case"heat draw":
+        //     console.log("enhance self");
+        //     break;
     }
 }
 

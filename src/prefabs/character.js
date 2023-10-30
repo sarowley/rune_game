@@ -17,7 +17,6 @@ class Character extends Phaser.Physics.Arcade.Sprite{
                 rune.setVisible(true);  
             }
             else if(this.currentSpell.length == 0){
-                // this.selector.setVisible(true);
                 this.currentlyCasting = true;
                 this.parentScene.physics.pause();
                 this.currentSpell.push(rune);
