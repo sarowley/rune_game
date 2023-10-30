@@ -34,6 +34,12 @@ class Play extends Phaser.Scene {
       startFrame: 0,
       endFrame: 4,
     });
+    this.load.spritesheet("iceBox", "./assets/cubes.png", {
+      frameWidth: 16,
+      frameHeight: 16,
+      startFrame: 3,
+      endFrame: 0,
+    });
     this.load.spritesheet("runes", "./assets/runes.png", {
       frameWidth: 16,
       frameHeight: 16,
@@ -102,6 +108,13 @@ class Play extends Phaser.Scene {
     //setting up boxes
     this.boxes = this.physics.add.group({ pushable: true, allowGravity: true });
     this.boxes.add(this.box);
+
+    let newBox = null;
+    newBox = new Box(this, 200, 200, "box", "box", dude, 1000);
+    this.boxes.add(newBox);
+
+    newBox = new Box(this, 300, 200, "box", "box", dude, 1000);
+    this.boxes.add(newBox);
 
     //making doors
     door1 = this.physics.add.staticSprite(312, 128, "door");
@@ -219,9 +232,9 @@ class Play extends Phaser.Scene {
     if (Phaser.Input.Keyboard.JustDown(this.key3)) {
       dude.addRune(this.shapeRune);
     }
-    if (Phaser.Input.Keyboard.JustDown(this.key4)) {
-      dude.addRune(this.drawRune);
-    }
+    // if (Phaser.Input.Keyboard.JustDown(this.key4)) {
+    //   dude.addRune(this.drawRune);
+    // }
     if (Phaser.Input.Keyboard.JustDown(this.keySpace)) {
       dude.castSpell();
     }
