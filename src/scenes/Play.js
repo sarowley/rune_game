@@ -152,9 +152,20 @@ class Play extends Phaser.Scene {
     pressurePlate = this.physics.add.staticSprite(400, 142, "plate");
     pressurePlate1 = this.physics.add.staticSprite(10, 382, "plate");
 
-    //making podium
-    this.podium = this.physics.add.staticGroup();
-    this.podium.create(560 - 24, 400 - 32, "podium");
+    //making podium;
+    this.podium = this.physics.add.sprite(560 - 24, 400 - 32, "podium");
+    this.podium.body.allowGravity = false;
+    this.podium.body.immovable = true;
+    this.anims.create({
+      key: "floatBook",
+      frames: this.anims.generateFrameNumbers("podium", {
+        start: 1,
+        end: 4,
+        first: 1,
+      }),
+      frameRate: 6,
+      repeat: -1,
+    });
 
 
     //making backgrounds
@@ -393,15 +404,20 @@ class Play extends Phaser.Scene {
   whatup() {
     this.physics.world.removeCollider(collider);
     door1.destroy();
+    pressurePlate.setFrame(1);
   }
   whatup3() {
     this.physics.world.removeCollider(collider);
     door2.destroy();
+    pressurePlate1.setFrame(1);
   }
 
   //end game function
   whatup2() {
     this.text.setVisible(true);
+    if(!this.podium.anims.isPlaying){
+      this.podium.anims.play("floatBook");
+    }
     if (Phaser.Input.Keyboard.JustDown(this.keySpace)) {
       this.scene.start("endScene");
     }
