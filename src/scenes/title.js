@@ -3,22 +3,14 @@ class Title extends Phaser.Scene {
         super("titleScene");
     }
 
-    create() {
-        let menuConfig = {
-            fontFamily: 'Courier',
-            fontSize: '28px',
-            color: '#FFFFFF',
-            padding: {
-                top: 5,
-                bottom: 5,
-            },
-            fixedWidth: 0
-        }
+    preload() {
+        this.load.image("title", "./assets/title.png");
+    }
 
-        //adding text
-        this.add.text(300, 200, 'temp title', menuConfig);
-        this.add.text(225, 250, 'Press Space to Start', menuConfig);
-    
+    create() {
+        this.title = this.add
+      .tileSprite(0, 0, 800, 600, "title")
+      .setOrigin(0, 0);
 
         //keybinds
         keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
