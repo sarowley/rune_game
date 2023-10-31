@@ -141,7 +141,7 @@ class Play extends Phaser.Scene {
 
     // newBox = new Box(this, 300, 200, "box", "box", dude, 1000);
     // this.boxes.add(newBox);
-    this.freeze = this.physics.add.sprite(2000, 2000, "freeze");
+    this.freeze = this.physics.add.sprite(2000, 2000, "freeE");
     this.freeze.body.offset.y = -16;
     this.frozen = this.physics.add.group({immovable:true, allowGravity: true});
     this.frozen.add(this.freeze);
