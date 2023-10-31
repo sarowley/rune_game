@@ -6,9 +6,9 @@ class Play extends Phaser.Scene {
   preload() {
     //load images
     this.load.image("test-rune", "./assets/testRune.png");
-    this.load.image("caveback", "./assets/CaveBG-1.png");
-    this.load.image("cavemid", "./assets/CaveBG-2.png");
-    this.load.image("cavenear", "./assets/CaveBG-3.png");
+    // this.load.image("caveback", "./assets/CaveBG-1.png");
+    // this.load.image("cavemid", "./assets/CaveBG-2.png");
+    // this.load.image("cavenear", "./assets/CaveBG-3.png");
     this.load.image("ice", "./assets/freeze.png");
     this.load.image("wizard", "./assets/testWizard-1.png");
     this.load.image("scroll", "./assets/scrollUI-1.png");
@@ -71,9 +71,10 @@ class Play extends Phaser.Scene {
     this.load.tilemapTiledJSON("tilemap", "./assets/tilemap.json");
   }
   create() {
-    this.add.sprite(0, 0, 'caveback').setOrigin(0, 0)
-    this.add.sprite(0, 0, 'cavemid').setOrigin(0, 0)
-    this.add.sprite(0, 0, 'cavenear').setOrigin(0, 0)
+    // this.add.sprite(0, 0, 'caveback').setOrigin(0, 0)
+    // this.add.sprite(0, 0, 'cavemid').setOrigin(0, 0)
+    // this.add.sprite(0, 0, 'cavenear').setOrigin(0, 0)
+    
     //set fps (prevent tunneling)
     this.physics.world.setFPS(120);
 
@@ -158,12 +159,12 @@ class Play extends Phaser.Scene {
     this.bg1 = this.add
     .tileSprite(0, 0, 560, 400, "bg1")
     .setOrigin(0, 0)
-    .setScale(1.2).setDepth(-3);
+    .setScale(1.2).setDepth(-3).setScrollFactor(1.05);
 
     this.bg2 = this.add
     .tileSprite(0, 0, 560, 400, "bg2")
     .setOrigin(0, 0)
-    .setScale(1.2).setDepth(-2);
+    .setScale(1.2).setDepth(-2).setScrollFactor(1.1);
 
     this.bg3 = this.add
     .tileSprite(0, 0, 560, 400, "bg3")
@@ -247,6 +248,10 @@ class Play extends Phaser.Scene {
         dude.setFrame(0);
       }
     }
+
+    //parallax
+    //this.bg1.tilePositionX -= 4;
+
     //keys
     //movement
     if (this.keyA.isDown) {
