@@ -18,6 +18,7 @@ class Play extends Phaser.Scene {
     this.load.image("pause", "./assets/pause.png");
     this.load.image("podium", "./assets/podium.png");
     this.load.image("text", "./assets/text.png");
+    this.load.image("door", "./assets/behindwallandfloor.png");
 
     //load spritesheets
     this.load.spritesheet("wizardss", "./assets/wizardSpritesheet.png", {
@@ -133,8 +134,8 @@ class Play extends Phaser.Scene {
     // this.boxes.add(newBox);
 
     //making doors
-    door1 = this.physics.add.staticSprite(312, 128, "door");
-    door2 = this.physics.add.staticSprite(104, 368, "door");
+    door1 = this.physics.add.staticSprite(312, 128, "door").setScale(1, 2);
+    door2 = this.physics.add.staticSprite(104, 368, "door").setScale(1, 2);
 
     //making pressure plates
     pressurePlate = this.physics.add.staticSprite(400, 142, "plate");
@@ -158,7 +159,9 @@ class Play extends Phaser.Scene {
     this.physics.add.collider(baseLayer, this.boxes);
     this.physics.add.collider(dude, baseLayer);
     this.physics.add.collider(dude, door1);
+    this.physics.add.collider(dude, this.boxes);
     this.physics.add.collider(dude, door2);
+    this.physics.add.overlap(dude, this.boxes, this.jump2, null, this);
     this.physics.add.overlap(dude, this.podium, this.whatup2, null, this);
     this.physics.add.overlap(
       this.boxes,
@@ -364,6 +367,12 @@ class Play extends Phaser.Scene {
     if (squat && dude.body.blocked.down) {
       dude.setVelocityY(-50);
       squat = false;
+    }
+  }
+
+  jump2() {
+    if (this.keyW.isDown) {
+      dude.setVelocityY(-150);
     }
   }
 }
