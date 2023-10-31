@@ -16,6 +16,9 @@ class Play extends Phaser.Scene {
     this.load.image("podium", "./assets/podium.png");
     this.load.image("text", "./assets/text.png");
     this.load.image("door", "./assets/behindwallandfloor.png");
+    this.load.image("bg1", "./assets/CaveBG-1.png");
+    this.load.image("bg2", "./assets/CaveBG-2.png");
+    this.load.image("bg3", "./assets/CaveBG-3.png");
 
     //load spritesheets
     this.load.spritesheet("wizardss", "./assets/wizardSpritesheet.png", {
@@ -139,6 +142,23 @@ class Play extends Phaser.Scene {
     this.podium = this.physics.add.staticGroup();
     this.podium.create(560 - 24, 400 - 32, "podium");
 
+
+    //making backgrounds
+    this.bg1 = this.add
+    .tileSprite(0, 0, 560, 400, "bg1")
+    .setOrigin(0, 0)
+    .setScale(1.2).setDepth(-3);
+
+    this.bg2 = this.add
+    .tileSprite(0, 0, 560, 400, "bg2")
+    .setOrigin(0, 0)
+    .setScale(1.2).setDepth(-2);
+
+    this.bg3 = this.add
+    .tileSprite(0, 0, 560, 400, "bg3")
+    .setOrigin(0, 0)
+    .setScale(1.2).setDepth(-1);
+
     //cameras
     this.cameras.main.setBounds(0, 0, 560, 400).setOrigin(0.5);
     this.cameras.main.setZoom(2.75);
@@ -224,6 +244,7 @@ class Play extends Phaser.Scene {
       dude.setScale(1);
       this.noFall();
     }
+
     //jumping
     if (this.keyW.isDown && dude.body.blocked.down) {
       dude.setVelocityY(-150);
