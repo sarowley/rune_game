@@ -9,7 +9,7 @@ class Play extends Phaser.Scene {
     this.load.image("caveback", "./assets/CaveBG-1.png");
     this.load.image("cavemid", "./assets/CaveBG-2.png");
     this.load.image("cavenear", "./assets/CaveBG-3.png");
-    this.load.image("ice", "./assets/freeze.png");
+    this.load.image("freeze", "./assets/freeze.png");
     this.load.image("wizard", "./assets/testWizard-1.png");
     this.load.image("scroll", "./assets/scrollUI-1.png");
     this.load.image("fire", "./assets/Fire1.png");
@@ -137,7 +137,10 @@ class Play extends Phaser.Scene {
 
     // newBox = new Box(this, 300, 200, "box", "box", dude, 1000);
     // this.boxes.add(newBox);
-
+    this.freeze = this.physics.add.sprite(2000, 2000, "freeze");
+    this.freeze.body.offset.y = -16;
+    this.frozen = this.physics.add.group({immovable:true, allowGravity: true});
+    this.frozen.add(this.freeze);
     //making doors
     door1 = this.physics.add.staticSprite(312, 128, "door").setScale(1, 2);
     door2 = this.physics.add.staticSprite(104, 368, "door").setScale(1, 2);
@@ -161,6 +164,8 @@ class Play extends Phaser.Scene {
     this.physics.add.collider(this.box, platforms);
     this.physics.add.collider(pressurePlate, this.box);
     this.physics.add.collider(this.boxes, this.boxes);
+    this.physics.add.collider(this.frozen, this.boxes);
+    this.physics.add.collider(baseLayer, this.frozen);
     this.physics.add.collider(baseLayer, this.boxes);
     this.physics.add.collider(dude, baseLayer);
     this.physics.add.collider(dude, door1);
