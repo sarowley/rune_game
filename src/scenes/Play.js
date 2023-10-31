@@ -6,6 +6,9 @@ class Play extends Phaser.Scene {
   preload() {
     //load images
     this.load.image("test-rune", "./assets/testRune.png");
+    this.load.image("caveback", "./assets/CaveBG-1.png");
+    this.load.image("cavemid", "./assets/CaveBG-2.png");
+    this.load.image("cavenear", "./assets/CaveBG-3.png");
     this.load.image("ice", "./assets/freeze.png");
     this.load.image("wizard", "./assets/testWizard-1.png");
     this.load.image("scroll", "./assets/scrollUI-1.png");
@@ -59,6 +62,9 @@ class Play extends Phaser.Scene {
     this.load.tilemapTiledJSON("tilemap", "./assets/tilemap.json");
   }
   create() {
+    this.add.sprite(0, 0, 'caveback').setOrigin(0, 0)
+    this.add.sprite(0, 0, 'cavemid').setOrigin(0, 0)
+    this.add.sprite(0, 0, 'cavenear').setOrigin(0, 0)
     //set fps (prevent tunneling)
     this.physics.world.setFPS(120);
 
@@ -207,6 +213,12 @@ class Play extends Phaser.Scene {
     let mouseY = game.input.mousePointer.worldY;
     this.mySelector.updatePosition(mouseX, mouseY);
 
+    if(dude.jumping){
+      if(dude.body.blocked.down){
+        dude.jumping = false;
+        dude.setFrame(0);
+      }
+    }
     //keys
     //movement
     if (this.keyA.isDown) {
@@ -229,25 +241,44 @@ class Play extends Phaser.Scene {
     //flip character
     if (Phaser.Input.Keyboard.JustDown(this.keyA)) {
       dude.flipX = true;
+      if(!dude.jumping){
+        dude.anims.play("wizardWalk");
+      }
     }
     if (Phaser.Input.Keyboard.JustDown(this.keyD)) {
       dude.resetFlip();
+      if(!dude.jumping){
+        dude.anims.play("wizardWalk");
+      }
+      
     }
 
-    //rune commands
-    if (Phaser.Input.Keyboard.JustDown(this.key1)) {
-      dude.addRune(this.heatRune);
+    if (Phaser.Input.Keyboard.JustUp(this.keyA)){
+      dude.anims.stop("wizardWalk");
     }
-    if (Phaser.Input.Keyboard.JustDown(this.key2)) {
-      dude.addRune(this.iceRune);
+    if (Phaser.Input.Keyboard.JustUp(this.keyD)){
+        dude.anims.stop("wizardWalk");
     }
-    if (Phaser.Input.Keyboard.JustDown(this.key3)) {
-      dude.addRune(this.shapeRune);
-    }
-    if (Phaser.Input.Keyboard.JustDown(this.keySpace)) {
-      dude.castSpell();
+    if (!dude.body.blocked.down){
+      dude.jumping = true;
+      dude.setFrame(4);
     }
 
+    if(!dude.jumping){ //cant cast spell while jumping
+      //rune commands
+      if (Phaser.Input.Keyboard.JustDown(this.key1)) {
+       dude.addRune(this.heatRune);
+      }
+      if (Phaser.Input.Keyboard.JustDown(this.key2)) {
+        dude.addRune(this.iceRune);
+      }
+      if (Phaser.Input.Keyboard.JustDown(this.key3)) {
+        dude.addRune(this.shapeRune);
+      }
+      if (Phaser.Input.Keyboard.JustDown(this.keySpace)) {
+        dude.castSpell();
+      }
+  }
     //pause functionality
     if (Phaser.Input.Keyboard.JustDown(this.keyTab)) {
       if (paused) {

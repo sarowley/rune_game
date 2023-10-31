@@ -2,8 +2,11 @@ class Title extends Phaser.Scene {
     constructor() {
         super("titleScene");
     }
-
+    preload(){
+        this.load.image("titlescreen", "./assets/RuneomancyMenu.png");
+    }
     create() {
+        this.add.sprite(game.config.width/2, game.config.height/2, 'titlescreen').setOrigin(0.5, 0.5)
         let menuConfig = {
             fontFamily: 'Courier',
             fontSize: '28px',
@@ -16,8 +19,8 @@ class Title extends Phaser.Scene {
         }
 
         //adding text
-        this.add.text(300, 200, 'temp title', menuConfig);
-        this.add.text(225, 250, 'Press Space to Start', menuConfig);
+        //this.add.text(300, 200, 'temp title', menuConfig);
+        //this.add.text(225, 250, 'Press Space to Start', menuConfig);
     
 
         //keybinds

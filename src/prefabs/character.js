@@ -8,6 +8,8 @@ class Character extends Phaser.Physics.Arcade.Sprite{
         this.currentlyCasting = false;
         this.parentScene = scene;
         this.selector = selector;
+        this.jumping = false;
+        this.walking = false;
     }
 
     addRune(rune){
