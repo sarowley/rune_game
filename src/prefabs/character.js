@@ -59,6 +59,15 @@ class Character extends Phaser.Physics.Arcade.Sprite{
         let box = new Box(this.parentScene, this.selector.x, this.selector.y, "iceBox", "iceBox", this, 1000);
     }
 
+    spawnFreeze(){
+        let freezeL = new Freeze(this.parentScene, this.selector.x-16, this.selector.y, "freeze", "freeze", this, 1000);
+        let freezeR = new Freeze(this.parentScene, this.selector.x+16, this.selector.y, "freeze", "freeze", this, 1000);
+        let freeze = new Freeze(this.parentScene, this.selector.x, this.selector.y, "freeze", "freeze", this, 1000);
+        freeze.body.offset.y = -16;
+        freezeL.body.offset.y = -16;
+        freezeR.body.offset.y = -16;
+    }
+
     destroyCube(name){
         let objectsHit = this.parentScene.physics.overlapRect(this.selector.x - 2, this.selector.y - 2, 4, 4, true, false);
         for(let item of objectsHit){
