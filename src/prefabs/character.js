@@ -47,7 +47,6 @@ class Character extends Phaser.Physics.Arcade.Sprite{
 
     removeSpell(){
         this.currentlyCasting = false;
-        // this.selector.setVisible(false);
         this.parentScene.physics.resume();
         for(let rune of this.currentSpell){
             rune.setVisible(false);
@@ -80,7 +79,6 @@ class Character extends Phaser.Physics.Arcade.Sprite{
     }
 
     spawnFire(x, y, width, height){
-        // let rectangle = this.parentScene.add.rectangle(this.selector.x, this.selector.y, 50, 50, 0xfacade);
         let objectsNear = this.parentScene.physics.overlapRect(x, y, width, height, true, false);
         for(let item of objectsNear){
             if(item.gameObject.name == "box" && !item.gameObject.burning){

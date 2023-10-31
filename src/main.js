@@ -31,4 +31,5 @@ var keySPACE;
 var keyTAB;
 var paused = false;
 var esc_paused = false;
+const BOXHEALTH = 500;
 let game = new Phaser.Game(config);

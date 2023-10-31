@@ -135,12 +135,52 @@ class Play extends Phaser.Scene {
     this.boxes = this.physics.add.group({ pushable: true, allowGravity: true });
     this.boxes.add(this.box);
 
-    // let newBox = null;
-    // newBox = new Box(this, 200, 200, "box", "box", dude, 1000);
-    // this.boxes.add(newBox);
 
-    // newBox = new Box(this, 300, 200, "box", "box", dude, 1000);
-    // this.boxes.add(newBox);
+
+    new Box(this, 424, 295, "box", "box", dude, BOXHEALTH);
+    new Box(this, 424, 280, "box", "box", dude, BOXHEALTH);
+
+    new Box(this, 408, 295, "box", "box", dude, BOXHEALTH);
+    new Box(this, 408, 280, "box", "box", dude, BOXHEALTH);
+
+    new Box(this, 376, 295, "box", "box", dude, BOXHEALTH);
+    new Box(this, 376, 280, "box", "box", dude, BOXHEALTH);
+
+    new Box(this, 360, 295, "box", "box", dude, BOXHEALTH);
+    new Box(this, 360, 280, "box", "box", dude, BOXHEALTH);
+
+    new Box(this, 344, 295, "box", "box", dude, BOXHEALTH);
+    new Box(this, 344, 280, "box", "box", dude, BOXHEALTH);
+
+    new Box(this, 312, 295, "box", "box", dude, BOXHEALTH);
+    new Box(this, 312, 280, "box", "box", dude, BOXHEALTH);
+
+    new Box(this, 296, 295, "box", "box", dude, BOXHEALTH);
+    new Box(this, 296, 280, "box", "box", dude, BOXHEALTH);
+
+    new Box(this, 280, 295, "box", "box", dude, BOXHEALTH);
+    new Box(this, 280, 280, "box", "box", dude, BOXHEALTH);
+
+
+    new Box(this, 248, 295, "iceBox", "iceBox", dude, BOXHEALTH);
+    new Box(this, 248, 280, "iceBox", "iceBox", dude, BOXHEALTH);
+
+    new Box(this, 232, 295, "iceBox", "iceBox", dude, BOXHEALTH);
+    new Box(this, 232, 280, "iceBox", "iceBox", dude, BOXHEALTH);
+
+    new Box(this, 216, 295, "iceBox", "iceBox", dude, BOXHEALTH);
+    new Box(this, 216, 280, "iceBox", "iceBox", dude, BOXHEALTH);
+
+
+    new Box(this, 184, 295, "box", "box", dude, BOXHEALTH);
+    new Box(this, 184, 280, "box", "box", dude, BOXHEALTH);
+
+    new Box(this, 168, 295, "box", "box", dude, BOXHEALTH);
+    new Box(this, 168, 280, "box", "box", dude, BOXHEALTH);
+
+    new Box(this, 152, 295, "box", "box", dude, BOXHEALTH);
+    new Box(this, 152, 280, "box", "box", dude, BOXHEALTH);
+
     this.freeze = this.physics.add.sprite(2000, 2000, "freeE");
     this.freeze.body.offset.y = -16;
     this.frozen = this.physics.add.group({immovable:true, allowGravity: true});
@@ -157,6 +197,7 @@ class Play extends Phaser.Scene {
     this.podium = this.physics.add.sprite(560 - 24, 400 - 32, "podium");
     this.podium.body.allowGravity = false;
     this.podium.body.immovable = true;
+    this.podium.setDepth(-1);
     this.anims.create({
       key: "floatBook",
       frames: this.anims.generateFrameNumbers("podium", {
