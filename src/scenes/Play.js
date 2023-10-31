@@ -300,7 +300,7 @@ class Play extends Phaser.Scene {
     }   
 
     //jumping
-    if (this.keyW.isDown && dude.body.blocked.down) {
+    if (this.keyW.isDown && dude.body.blocked.down && !squat) {
       dude.setVelocityY(-150);
       dude.jumping = true;
       dude.setFrame(4);
