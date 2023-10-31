@@ -245,7 +245,16 @@ class Play extends Phaser.Scene {
     let mouseX = game.input.mousePointer.worldX;
     let mouseY = game.input.mousePointer.worldY;
     this.mySelector.updatePosition(mouseX, mouseY);
-
+    if(squat == true){
+      if(!this.physics.overlap(dude, this.frozen)){
+        dude.setVelocityX(0);
+        dude.setScale(1);
+        dude.setFrame(0);
+        this.noFall();
+      }else{
+        dude.setFrame(5);
+      }
+    }
     if(dude.jumping){
       if(dude.body.blocked.down){
         dude.jumping = false;
@@ -258,14 +267,21 @@ class Play extends Phaser.Scene {
       dude.setVelocityX(-80);
     } else if (this.keyD.isDown) {
       dude.setVelocityX(80);
-    } else if (this.keyS.isDown) {
-      dude.setScale(1, 0.5);
-      squat = true;
     } else {
-      dude.setVelocityX(0);
-      dude.setScale(1);
-      this.noFall();
+      if(!squat){
+        dude.setVelocityX(0);
+      }
+     // dude.setScale(1);
+      //this.noFall();
     }
+
+    if (Phaser.Input.Keyboard.JustDown(this.keyS)) {
+      if(this.physics.overlap(dude, this.frozen)){  
+        dude.setScale(1, 0.5);
+        dude.setFrame(5);
+        squat = true;
+      }
+    }   
 
     //jumping
     if (this.keyW.isDown && dude.body.blocked.down) {
@@ -277,13 +293,13 @@ class Play extends Phaser.Scene {
     //flip character
     if (Phaser.Input.Keyboard.JustDown(this.keyA)) {
       dude.flipX = true;
-      if(!dude.jumping){
+      if(!dude.jumping&&!squat){
         dude.anims.play("wizardWalk");
       }
     }
     if (Phaser.Input.Keyboard.JustDown(this.keyD)) {
       dude.resetFlip();
-      if(!dude.jumping){
+      if(!dude.jumping&&!squat){
         dude.anims.play("wizardWalk");
       }
       
