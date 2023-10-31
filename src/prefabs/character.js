@@ -3,7 +3,7 @@ class Character extends Phaser.Physics.Arcade.Sprite{
         super(scene, x, y, texture);
         scene.add.existing(this);
         scene.physics.add.existing(this).setOrigin(0.5);
-
+        
         this.currentSpell = [];
         this.currentlyCasting = false;
         this.parentScene = scene;

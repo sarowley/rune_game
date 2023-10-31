@@ -16,7 +16,12 @@ class Play extends Phaser.Scene {
     this.load.image("platform", "./assets/FloorTile-1.png.png");
     this.load.image("spell_list", "./assets/spellsheet.png");
     this.load.image("pause", "./assets/pause.png");
-    this.load.image("podium", "./assets/podium.png");
+    this.load.spritesheet("podium", "./assets/podium.png", {
+    frameWidth: 16,
+    frameHeight: 32,
+    startFrame:0,
+    endFrame:5
+    });
     this.load.image("text", "./assets/text.png");
     this.load.image("door", "./assets/behindwallandfloor.png");
 
@@ -239,6 +244,8 @@ class Play extends Phaser.Scene {
     //jumping
     if (this.keyW.isDown && dude.body.blocked.down) {
       dude.setVelocityY(-150);
+      dude.jumping = true;
+      dude.setFrame(4);
     }
 
     //flip character
@@ -261,10 +268,6 @@ class Play extends Phaser.Scene {
     }
     if (Phaser.Input.Keyboard.JustUp(this.keyD)){
         dude.anims.stop("wizardWalk");
-    }
-    if (!dude.body.blocked.down){
-      dude.jumping = true;
-      dude.setFrame(4);
     }
 
     if(!dude.jumping){ //cant cast spell while jumping
