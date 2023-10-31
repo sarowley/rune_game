@@ -171,19 +171,19 @@ class Play extends Phaser.Scene {
 
     //making backgrounds
     this.bg1 = this.add
-    .tileSprite(0, 0, 560, 400, "bg1")
-    .setOrigin(0, 0)
+    .tileSprite(0, 0, 840, 600, "bg1")
+    .setOrigin(0.05, 0.05)
     .setScale(1.2).setDepth(-3).setScrollFactor(1.05);
 
     this.bg2 = this.add
-    .tileSprite(0, 0, 560, 400, "bg2")
-    .setOrigin(0, 0)
+    .tileSprite(0, 0, 840, 600, "bg2")
+    .setOrigin(0.05, 0.05)
     .setScale(1.2).setDepth(-2).setScrollFactor(1.1);
 
     this.bg3 = this.add
-    .tileSprite(0, 0, 560, 400, "bg3")
-    .setOrigin(0, 0)
-    .setScale(1.2).setDepth(-1);
+    .tileSprite(0, 0, 840, 600, "bg3")
+    .setOrigin(0.05, 0.05)
+    .setScale(1.2).setDepth(-1).setScrollFactor(1.15);
 
     //cameras
     this.cameras.main.setBounds(0, 0, 560, 400).setOrigin(0.5);
