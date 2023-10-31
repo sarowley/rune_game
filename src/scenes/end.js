@@ -4,24 +4,11 @@ class End extends Phaser.Scene {
   }
 
   preload() {
-    this.load.image("end", "./assets/the_dude.jpg");
+    this.load.image("end", "./assets/end.png");
   }
   create() {
-    let menuConfig = {
-      fontFamily: "Courier",
-      fontSize: "28px",
-      color: "#FFFFFF",
-      padding: {
-        top: 5,
-        bottom: 5,
-      },
-      fixedWidth: 0,
-    };
 
-    //adding text
-    this.add.text(225, 250, "Press Space to Restart", menuConfig);
-
-    this.end = this.add.tileSprite(0, 0, 701, 508, "end").setOrigin(0, 0);
+    this.end = this.add.tileSprite(0, 0, 800, 600, "end").setOrigin(0, 0);
 
     //keybinds
     keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);

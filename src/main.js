@@ -28,6 +28,7 @@ var cursors;
 var squat = false;
 var collider;
 var keySPACE;
+var keyTAB;
 var paused = false;
 var esc_paused = false;
 let game = new Phaser.Game(config);
